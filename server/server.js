@@ -1,3 +1,4 @@
+require("./models/dbInit");
 const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
@@ -11,7 +12,6 @@ const router = require("./routes/router");
 
 app
   .use(cors())
-  .use("/api", router)
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
 
@@ -60,6 +60,20 @@ io.on("connect", (socket) => {
         users: getUsersInRoom(user.room)
       });
     }
+  });
+});
+
+app.use("/api", router);
+
+app.use((req, res, next) => {
+  const error = new Error(`${req.originalUrl} is not a route`);
+  res.status(404);
+  next(error);
+});
+app.use((error, req, res, next) => {
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  res.status(statusCode).json({
+    error: error.message
   });
 });
 

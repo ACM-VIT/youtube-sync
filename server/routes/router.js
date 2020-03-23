@@ -5,7 +5,9 @@ router.get("/", (req, res) => {
   return res.json({ msg: "Youtube Sync backend" });
 });
 
-router.post("/newUser", auth.signIn);
+//auth part of api
+router.post("/signUp", auth.signUp);
 router.post("/login", auth.login);
+//TODO:signout route
 
 module.exports = router;

@@ -21,10 +21,11 @@ const jwt = require("jsonwebtoken");
 
 const signUp = async (req, res) => {
   const newUser = { ...req.body };
-  //TODO: VALIDATE USER
+  //TODO: VALIDATE req.body
 
   const handleExists = await User.findOne({ handle: newUser.handle });
-  if (handleExists) return res.status(404).send("email exists");
+  if (handleExists)
+    return res.status(404).json({ sucess: false, error: "handle exists" });
 
   const salt = await bcrypt.genSaltSync(10);
   const hashedPwd = await bcrypt.hashSync(newUser.pwd, salt);
@@ -41,9 +42,7 @@ const signUp = async (req, res) => {
 
 const login = async (req, res) => {
   const { handle } = req.body;
-  //TODO:Validate User
-  //TODO:JWT and Sessions
-  //TODO:hash pwd verfication
+  //TODO:Validate req.body
 
   const user = await User.findOne({ handle });
   if (!user)
@@ -59,7 +58,7 @@ const login = async (req, res) => {
     { _id: user._id },
     process.env.TOKEN_SECRET || "testlalal"
   );
-  res.header("authorization", token).json({ token });
+  return res.header("authorization", token).json({ token });
 };
 
 module.exports = {
