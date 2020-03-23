@@ -19,11 +19,19 @@ const User = require("../models/User");
 const signIn = async (req, res) => {
   const newUser = { ...req.body };
   //TODO: VALIDATE USER
+  //TODO:Hash pwd
   try {
     let temp = await User.create(newUser);
-  } catch {}
+    return res.json({ success: true, user: temp });
+  } catch (err) {
+    console.error(err);
+    return res.json({ success: false });
+  }
 };
 
+const login = async (req, res) => {};
+
 module.exports = {
-  signIn
+  signIn,
+  login
 };
