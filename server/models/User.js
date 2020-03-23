@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema({
   noOfSyncs: {
     type: Number
   },
+  password: {
+    type: String
+  },
   friends: {
     type: [String]
   }
