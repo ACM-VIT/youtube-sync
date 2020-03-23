@@ -9,8 +9,11 @@ const io = socketio(server);
 
 const router = require("./routes/router");
 
-app.use(cors());
-app.use("/api", router);
+app
+  .use(cors())
+  .use("/api", router)
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }));
 
 io.on("connect", (socket) => {
   socket.on("join", ({ name, room }, callback) => {

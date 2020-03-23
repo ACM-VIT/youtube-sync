@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   noOfSyncs: {
     type: Number
   },
-  password: {
+  pwd: {
     type: String
   },
   friends: {
