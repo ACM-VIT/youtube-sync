@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 /*
   UserSchema:
    name: {
@@ -22,7 +24,7 @@ const signUp = async (req, res) => {
   //TODO: VALIDATE USER
 
   const handleExists = await User.findOne({ handle: newUser.handle });
-  if (emailExists) return res.status(404).send("email exists");
+  if (handleExists) return res.status(404).send("email exists");
 
   const salt = await bcrypt.genSaltSync(10);
   const hashedPwd = await bcrypt.hashSync(newUser.pwd, salt);
@@ -38,22 +40,26 @@ const signUp = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const user = { ...req.body };
-
+  const { handle } = req.body;
   //TODO:Validate User
   //TODO:JWT and Sessions
   //TODO:hash pwd verfication
 
-  try {
-    const temp = await User.findOne({ handle: user.handle });
-    if (!temp)
-      return res.send(401).json({ success: false, error: "No user exists" });
+  const user = await User.findOne({ handle });
+  if (!user)
+    return res
+      .status(404)
+      .json({ success: false, error: `User does not exist` });
 
-    return res.status(200).json({ sucess: true, user: temp });
-  } catch (err) {
-    console.error(err);
-    return res.staus(500).json({ success: false, error: "DB Error" });
-  }
+  const validPassword = await bcrypt.compare(req.body.pwd, user.pwd);
+  if (!validPassword)
+    return res.status(404).json({ success: false, error: "invalid password" });
+
+  const token = jwt.sign(
+    { _id: user._id },
+    process.env.TOKEN_SECRET || "testlalal"
+  );
+  res.header("authorization", token).json({ token });
 };
 
 module.exports = {

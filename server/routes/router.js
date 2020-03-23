@@ -6,5 +6,6 @@ router.get("/", (req, res) => {
 });
 
 router.post("/newUser", auth.signIn);
+router.post("/login", auth.login);
 
 module.exports = router;
