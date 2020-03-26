@@ -1,0 +1,81 @@
+@font-face {
+  src: url("./pxgrot.ttf");
+  font-family: "pxgrot";
+}
+
+body {
+  overflow: hidden;
+}
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  background: url("./redBG.jpg");
+  background-size: cover;
+}
+
+.DashBegin {
+  width: 0vw;
+  height: 100vw;
+  background: linear-gradient(#7474bf, #348ac7);
+}
+
+.dashWrapper {
+  display: flex;
+  width: 0vw;
+  height: 100vh;
+}
+.menu {
+  background: linear-gradient(#ed213a, #93291e);
+  height: 100vh;
+  width: 0;
+  flex: 1;
+}
+.RoomOptions {
+  width: 20%;
+  height: 30%;
+  position: absolute;
+  bottom: 15%;
+  margin-left: 8%;
+  font-family: "pxgrot";
+  font-size: 2.4rem;
+  display: none;
+  white-space: nowrap;
+  line-height: 1.7rem;
+}
+.RoomOptions span {
+  display: none;
+}
+
+.RoomOptions span:hover {
+  letter-spacing: 0.2rem;
+}
+
+.dashTitle {
+  color: white;
+  opacity: 0;
+  position: fixed;
+  top: 10vw;
+  left: 4vw;
+}
+
+.display {
+  height: 100vh;
+  flex: 1;
+
+  background-size: cover;
+  background-attachment: fixed;
+  /* background-color: blueviolet; */
+}
+
+.profileBtn {
+  display: none;
+  position: absolute;
+  top: 6%;
+  left: 4.2vw;
+  width: 10%;
+  height: 10%;
+}
+.profileBtn svg {
+  width: 23px;
+  fill: #fff;
+}
