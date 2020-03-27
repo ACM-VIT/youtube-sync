@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import gsap from "gsap";
 import "./dashboard.css";
 function toPX(value) {
@@ -8,7 +8,16 @@ function toPX(value) {
   );
 }
 
+function slideIn() {
+  gsap.to(".whiteScreen", {
+    width: toPX("75vw"),
+    ease: "ease-in",
+    duration: 0.5
+  });
+}
+
 function DashBoard(props) {
+  let [blur, changeBlur] = useState("none");
   useEffect(() => {
     const tl = gsap.timeline();
     tl.to(".DashBegin", { width: toPX("100vw") }, 1); //blue screen
@@ -47,14 +56,32 @@ function DashBoard(props) {
             </svg>
           </div>
           <div className="RoomOptions">
-            <span id="createRoom">Create Room</span>
+            <span
+              id="createRoom"
+              onClick={() => {
+                changeBlur("inline");
+                slideIn();
+              }}
+            >
+              Create Room
+            </span>
             <br />
-            <span id="joinRoom">Join Room</span>
+            <span
+              id="joinRoom"
+              onClick={() => {
+                changeBlur("inline");
+                slideIn();
+              }}
+            >
+              Join Room
+            </span>
           </div>
         </div>
         <div className="display"></div>
       </main>
       <h1 className="dashTitle">Sync</h1>
+      <div className="menuBlur" style={{ display: blur }}></div>
+      <div className="whiteScreen"></div>
     </div>
   );
 }
