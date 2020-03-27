@@ -14,6 +14,8 @@ function slideIn() {
     ease: "ease-in",
     duration: 0.5
   });
+  const whiteScreen = document.querySelector(".whiteScreen");
+  whiteScreen.style = "padding:2rem 3rem";
 }
 
 function slideOut() {
@@ -42,6 +44,25 @@ function DashBoard(props) {
     tl.to(".RoomOptions", { display: "block" }, "-=1");
     tl.to("#createRoom", { display: "block", ease: "ease-out" }, ">"); // Room option 1 pop up
     tl.to("#joinRoom", { display: "inline", ease: "ease-out" }, "-=0.2"); //Room option 2 pop up
+  });
+
+  useEffect(() => {
+    let mouseX, mouseY;
+    let ww = window.innerWidth;
+    let wh = window.innerHeight;
+    let traX, traY;
+    document
+      .querySelector(".whiteScreen")
+      .addEventListener("mouseover", (e) => {
+        mouseX = e.pageX;
+        mouseY = e.pageY;
+        traX = (4 * mouseX) / 570 + 40;
+        traY = (4 * mouseY) / 570 + 50;
+        console.log(traX, traY);
+        document.querySelector(
+          ".name"
+        ).style = `background-position:${traX}%${traY}%`;
+      });
   });
   return (
     <div className="wrapper">
@@ -91,13 +112,28 @@ function DashBoard(props) {
       <div className="menuBlur" style={{ display: blur }}></div>
       <div className="whiteScreen">
         <img
-          class="closeBtn"
+          className="closeBtn"
           onClick={() => {
             changeBlur("none");
             slideOut();
           }}
           src="https://img.icons8.com/ios/50/000000/close-window.png"
         />
+        <img
+          className="avatar"
+          src={JSON.parse(sessionStorage.getItem("userYS")).imageUrl}
+          alt=""
+        />
+        <br />
+        <hr />
+        <div className="profile">
+          <span>Name</span> <br />
+          <div class="universe">
+            <div class="name">
+              {JSON.parse(sessionStorage.getItem("userYS")).name}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

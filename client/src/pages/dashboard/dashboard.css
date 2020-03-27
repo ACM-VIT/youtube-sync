@@ -108,16 +108,83 @@ body {
 }
 
 .whiteScreen {
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   background-color: white;
   position: fixed;
   bottom: 0;
   right: 0;
-  height: 96vh;
+  height: 98vh;
   width: 0;
   /*  width: 75vw; */
+}
+
+.closeBtn {
+  width: 40px;
+  height: 40px;
 }
 
 .closeBtn:hover {
   cursor: pointer;
 }
+
+.profile {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  top: 2%;
+  /* border: 2px solid black; */
+  height: 20vh;
+  width: 68vw;
+  min-width: 200px;
+  font-weight: bold;
+  font-size: 3rem;
+}
+.profile span {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  margin: 0 auto;
+  box-shadow: 2px 5px 15px 0px rgb(160, 160, 160);
+}
+
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,,800,900);
+.universe {
+  /* background: -webkit-linear-gradient(#ebece7, white);
+  background: linear-gradient(#ebece7, white); */
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Raleway', sans-serif;
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 85%;
+}
+
+.name {
+  font-weight: 800;
+  width:80%;
+  height:80%;
+  /* border: 2px solid black; */
+  color: transparent;
+  font-size: 3rem;
+  background: url("https://phandroid.s3.amazonaws.com/wp-content/uploads/2014/05/rainbow-nebula.jpg") repeat;
+  background-position: 40% 50%;
+  -webkit-background-clip: text;
+  position: relative;
+  text-align: left;
+  line-height: 70px;
+  letter-spacing: 1px;
+}
+

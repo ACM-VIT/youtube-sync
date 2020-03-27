@@ -6,7 +6,7 @@ import "./landingPage.css";
 import BannerImage from "../../static/images/youtubeBG.jpg";
 
 const responseGoogle = (response) => {
-  sessionStorage.setItem("userYS", response.profileObj);
+  sessionStorage.setItem("userYS", JSON.stringify(response.profileObj));
   console.log(response.profileObj);
   window.location.href = "/dashboard";
 };
