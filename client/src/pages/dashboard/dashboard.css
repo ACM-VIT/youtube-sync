@@ -65,6 +65,7 @@ body {
   letter-spacing: 0.03rem;
   font-weight: 600;
   text-shadow: 2px 2px 4px #000000;
+  cursor: pointer;
 }
 
 .dashTitle {
@@ -107,6 +108,7 @@ body {
 }
 
 .whiteScreen {
+  box-sizing: border-box;
   background-color: white;
   position: fixed;
   bottom: 0;
@@ -114,4 +116,8 @@ body {
   height: 96vh;
   width: 0;
   /*  width: 75vw; */
+}
+
+.closeBtn:hover {
+  cursor: pointer;
 }

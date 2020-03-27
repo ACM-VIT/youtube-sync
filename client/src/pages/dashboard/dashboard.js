@@ -16,6 +16,14 @@ function slideIn() {
   });
 }
 
+function slideOut() {
+  gsap.to(".whiteScreen", {
+    width: 0,
+    ease: "ease-in",
+    duration: 0.5
+  });
+}
+
 function DashBoard(props) {
   let [blur, changeBlur] = useState("none");
   useEffect(() => {
@@ -81,7 +89,16 @@ function DashBoard(props) {
       </main>
       <h1 className="dashTitle">Sync</h1>
       <div className="menuBlur" style={{ display: blur }}></div>
-      <div className="whiteScreen"></div>
+      <div className="whiteScreen">
+        <img
+          class="closeBtn"
+          onClick={() => {
+            changeBlur("none");
+            slideOut();
+          }}
+          src="https://img.icons8.com/ios/50/000000/close-window.png"
+        />
+      </div>
     </div>
   );
 }
