@@ -5,10 +5,17 @@ import Loader from "./loader";
 import "./landingPage.css";
 import BannerImage from "../../static/images/youtubeBG.jpg";
 
-const responseGoogle = (response) => {
-  sessionStorage.setItem("userYS", response.profileObj);
-  console.log(response.profileObj);
-  window.location.href = "/dashboard";
+const responseGoogle = async (response) => {
+  return sessionStorage.setItem("userYS", JSON.stringify(response.profileObj));
+};
+
+const redirect = (response) => {
+  responseGoogle(response).then((window.location.href = "/dashboard"));
+};
+
+const googleFail = (response) => {
+  console.error(response);
+  alert("FAIL");
 };
 
 function LandingPage(props) {
@@ -46,9 +53,8 @@ function LandingPage(props) {
             )}
             clientId="403059120816-7q0nfehr1190g100vt65ms7qg7engls1.apps.googleusercontent.com"
             buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            isSignedIn={true}
+            onSuccess={redirect}
+            onFailure={googleFail}
             cookiePolicy={"single_host_origin"}
           />
         </div>

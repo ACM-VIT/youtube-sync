@@ -1,7 +1,8 @@
 @import "https://fonts.googleapis.com/css?family=Bungee+Shade";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 @font-face {
   src: url("./pxgrot.ttf");
-  font-family: "pxgrot";
+  font-family: pxgrot;
 }
 
 body {
@@ -70,6 +71,7 @@ body {
 }
 
 .dashTitle {
+  font-family: 'Poppins', sans-serif;
   color: white;
   opacity: 0;
   position: fixed;
@@ -176,9 +178,41 @@ body {
   background: url("https://phandroid.s3.amazonaws.com/wp-content/uploads/2014/05/rainbow-nebula.jpg") repeat;
   background-position: 40% 50%;
   -webkit-background-clip: text;
+  background-clip:text;
   position: relative;
   text-align: left;
   line-height: 70px;
   letter-spacing: 1px;
 }
+
+.profileStats {
+  /*  border:2px solid black; */
+   height: 55vh;
+   width:34vw;
+   color:black;
+   position:relative;
+   left:35vw;
+   top:3vh;
+ }
+ 
+ .stat{
+   font-size:1.5rem;
+ }
+ .stat span {
+   font-weight: bold;
+   font-size:3rem;
+ }
+ .Logout{
+   position: relative;
+   right:5%;
+   transform: translateY(60%);
+   border:2px solid black;
+   color:black;
+   height:20%;
+   width:30%;
+   font-family: 'Bungee Shade', sans-serif;
+   font-size: 1.35rem;
+   background-color:white;
+ }
+ 
 

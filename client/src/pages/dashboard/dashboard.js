@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import gsap from "gsap";
 import "./dashboard.css";
+import { GoogleLogout } from "react-google-login";
 function toPX(value) {
   return (
     (parseFloat(value) / 100) *
@@ -22,10 +23,83 @@ function slideOut() {
     ease: "ease-in",
     duration: 0.5
   });
+  const whiteScreen = document.querySelector(".whiteScreen");
+  whiteScreen.style = "padding:0";
 }
+
+const hrVeticalStyle = {
+  transform: "rotate(90deg)",
+  width: "33%",
+  position: "relative",
+  left: "23vw",
+  top: "15vw"
+};
+
+const Profile = ({ changeBlur, showProfile }) => {
+  const logout = () => {
+    window.location.href = "/";
+  };
+  return (
+    <>
+      <img
+        className="closeBtn"
+        onClick={() => {
+          slideOut();
+          changeBlur("none");
+          showProfile(false);
+        }}
+        src="https://img.icons8.com/ios/50/000000/close-window.png"
+      />
+      <img
+        className="avatar"
+        src={JSON.parse(sessionStorage.getItem("userYS")).imageUrl}
+        alt=""
+      />
+      <br />
+      <hr />
+      <div className="profile">
+        <span>Name</span> <br />
+        <div className="universe">
+          <div className="name">
+            {JSON.parse(sessionStorage.getItem("userYS")).name.split(" ")[0]}
+            <br />
+            {JSON.parse(sessionStorage.getItem("userYS")).name.split(" ")[1]}
+          </div>
+        </div>
+      </div>
+      <hr style={hrVeticalStyle} />
+      <div className="profileStats">
+        <div className="stat">
+          no of Syncs <br />
+          <span>0</span>
+        </div>
+        <br />
+        <div className="stat">
+          joined <br />
+          <span>4th March 2020</span>
+        </div>
+        <GoogleLogout
+          clientId="403059120816-7q0nfehr1190g100vt65ms7qg7engls1.apps.googleusercontent.com"
+          buttonText="Logout"
+          onLogoutSuccess={logout}
+          render={(renderProps) => (
+            <button
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+              className="Logout"
+            >
+              Logout
+            </button>
+          )}
+        />
+      </div>
+    </>
+  );
+};
 
 function DashBoard(props) {
   let [blur, changeBlur] = useState("none");
+  let [profile, showProfile] = useState(false);
   useEffect(() => {
     const tl = gsap.timeline();
     tl.to(".DashBegin", { width: toPX("100vw") }, 1); //blue screen
@@ -46,8 +120,6 @@ function DashBoard(props) {
 
   useEffect(() => {
     let mouseX, mouseY;
-    let ww = window.innerWidth;
-    let wh = window.innerHeight;
     let traX, traY;
     document
       .querySelector(".whiteScreen")
@@ -57,9 +129,11 @@ function DashBoard(props) {
         traX = (4 * mouseX) / 570 + 40;
         traY = (4 * mouseY) / 570 + 50;
         console.log(traX, traY);
-        document.querySelector(
-          ".name"
-        ).style = `background-position:${traX}%${traY}%`;
+        if (document.querySelector(".name")) {
+          document.querySelector(
+            ".name"
+          ).style = `background-position:${traX}%${traY}%`;
+        }
       });
   });
   return (
@@ -67,7 +141,14 @@ function DashBoard(props) {
       <div className="DashBegin"></div>
       <main className="dashWrapper">
         <div className="menu">
-          <div className="profileBtn">
+          <div
+            className="profileBtn"
+            onClick={() => {
+              changeBlur("inline");
+              slideIn();
+              showProfile(true);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 23 25"
@@ -109,29 +190,9 @@ function DashBoard(props) {
       <h1 className="dashTitle">Sync</h1>
       <div className="menuBlur" style={{ display: blur }}></div>
       <div className="whiteScreen">
-        <img
-          className="closeBtn"
-          onClick={() => {
-            changeBlur("none");
-            slideOut();
-          }}
-          src="https://img.icons8.com/ios/50/000000/close-window.png"
-        />
-        <img
-          className="avatar"
-          src={JSON.parse(sessionStorage.getItem("userYS")).imageUrl}
-          alt=""
-        />
-        <br />
-        <hr />
-        <div className="profile">
-          <span>Name</span> <br />
-          <div class="universe">
-            <div class="name">
-              {JSON.parse(sessionStorage.getItem("userYS")).name}
-            </div>
-          </div>
-        </div>
+        {profile && (
+          <Profile showProfile={showProfile} changeBlur={changeBlur} />
+        )}
       </div>
     </div>
   );
