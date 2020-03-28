@@ -179,27 +179,6 @@ function DashBoard(props) {
     tl.to("#createRoom", { display: "block", ease: "ease-out" }, ">"); // Room option 1 pop up
     tl.to("#joinRoom", { display: "inline", ease: "ease-out" }, "-=0.2"); //Room option 2 pop up
   });
-
-  useEffect(() => {
-    let mouseX, mouseY;
-    let ww = window.innerWidth;
-    let wh = window.innerHeight;
-    let traX, traY;
-    document
-      .querySelector(".whiteScreen")
-      .addEventListener("mouseover", (e) => {
-        mouseX = e.pageX;
-        mouseY = e.pageY;
-        traX = (4 * mouseX) / 570 + 40;
-        traY = (4 * mouseY) / 570 + 50;
-        if (document.querySelector(".name")) {
-          document.querySelector(
-            ".name"
-          ).style = `background-position:${traX}%${traY}%`;
-        }
-      });
-  });
-
   return (
     <div className="wrapper">
       <div className="DashBegin"></div> {/* bluescreen */}
@@ -211,10 +190,14 @@ function DashBoard(props) {
       <h1 className="dashTitle">Sync</h1>
       <div className="menuBlur" style={{ display: blur }}></div>
       <div className="whiteScreen">
-        {profile && (
-          <Profile changeBlur={changeBlur} showProfile={showProfile} />
-        )}
-        {createRoom && <CreateRoom />}
+        <img
+          class="closeBtn"
+          onClick={() => {
+            changeBlur("none");
+            slideOut();
+          }}
+          src="https://img.icons8.com/ios/50/000000/close-window.png"
+        />
       </div>
     </div>
   );
