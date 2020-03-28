@@ -17,8 +17,6 @@ function slideIn() {
     ease: "ease-in",
     duration: 0.5
   });
-  const whiteScreen = document.querySelector(".whiteScreen");
-  whiteScreen.style = "padding:2rem 3rem";
 }
 
 function slideOut() {
