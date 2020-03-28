@@ -48,7 +48,6 @@ function LandingPage(props) {
             buttonText="Login"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
-            isSignedIn={true}
             cookiePolicy={"single_host_origin"}
           />
         </div>
