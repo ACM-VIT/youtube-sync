@@ -28,11 +28,8 @@ function slideOut() {
 }
 
 const hrVeticalStyle = {
-  transform: "rotate(90deg)",
-  width: "33%",
-  position: "relative",
-  left: "23vw",
-  top: "15vw"
+  /* transform: "rotate(90deg)", */
+  width: "1%"
 };
 
 const Profile = ({ changeBlur, showProfile }) => {
@@ -56,42 +53,44 @@ const Profile = ({ changeBlur, showProfile }) => {
         alt=""
       />
       <br />
-      <hr />
+      <hr style={{ width: "80%", alignSelf: "center" }} />
       <div className="profile">
-        <span>Name</span> <br />
-        <div className="universe">
-          <div className="name">
-            {JSON.parse(sessionStorage.getItem("userYS")).name.split(" ")[0]}
-            <br />
-            {JSON.parse(sessionStorage.getItem("userYS")).name.split(" ")[1]}
+        <div className="nameWrapper">
+          <div className="universe">
+            <span>Name</span>
+            <div className="name" style={{ whiteSpace: "pre-line" }}>
+              {JSON.parse(sessionStorage.getItem("userYS"))
+                .name.split(" ")
+                .join("\n")}
+            </div>
           </div>
         </div>
-      </div>
-      <hr style={hrVeticalStyle} />
-      <div className="profileStats">
-        <div className="stat">
-          no of Syncs <br />
-          <span>0</span>
+        <hr style={hrVeticalStyle} />
+        <div className="profileStats">
+          <div className="stat">
+            no of Syncs <br />
+            <span>0</span>
+          </div>
+          <br />
+          <div className="stat">
+            joined <br />
+            <span>4th March 2020</span>
+          </div>
+          <GoogleLogout
+            clientId="403059120816-7q0nfehr1190g100vt65ms7qg7engls1.apps.googleusercontent.com"
+            buttonText="Logout"
+            onLogoutSuccess={logout}
+            render={(renderProps) => (
+              <button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                className="Logout"
+              >
+                Logout
+              </button>
+            )}
+          />
         </div>
-        <br />
-        <div className="stat">
-          joined <br />
-          <span>4th March 2020</span>
-        </div>
-        <GoogleLogout
-          clientId="403059120816-7q0nfehr1190g100vt65ms7qg7engls1.apps.googleusercontent.com"
-          buttonText="Logout"
-          onLogoutSuccess={logout}
-          render={(renderProps) => (
-            <button
-              onClick={renderProps.onClick}
-              disabled={renderProps.disabled}
-              className="Logout"
-            >
-              Logout
-            </button>
-          )}
-        />
       </div>
     </>
   );
@@ -128,7 +127,6 @@ function DashBoard(props) {
         mouseY = e.pageY;
         traX = (4 * mouseX) / 570 + 40;
         traY = (4 * mouseY) / 570 + 50;
-        console.log(traX, traY);
         if (document.querySelector(".name")) {
           document.querySelector(
             ".name"

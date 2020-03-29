@@ -111,6 +111,9 @@ body {
 }
 
 .whiteScreen {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
   box-sizing: border-box;
   background-color: white;
   position: fixed;
@@ -120,45 +123,43 @@ body {
   width: 0;
   /*  width: 75vw; */
 }
-
+.closeBtn {
+  align-self: start;
+}
 .closeBtn:hover {
   cursor: pointer;
 }
 
-.profile {
+.nameWrapper{
   display:flex;
   flex-direction: column;
-  justify-content: center;
   position: relative;
   top: 2%;
-  /* border: 2px solid black; */
-  height: 20vh;
-  width: 68vw;
-  min-width: 200px;
+  /* border: 2px solid black;  */
+  margin:1rem;
   font-weight: bold;
-  font-size: 3rem;
+  width: 90vw;
+  height:55vh;
+  /* background-color: salmon; */
 }
-.profile span {
+.nameWrapper span {
   font-size: 1.5rem;
   font-weight: normal;
 }
 
 .avatar {
-  vertical-align: middle;
+  align-self: center;
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  margin: 0 auto;
   box-shadow: 2px 5px 15px 0px rgb(160, 160, 160);
 }
 
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,,800,900);
 .universe {
-  /* background: -webkit-linear-gradient(#ebece7, white);
-  background: linear-gradient(#ebece7, white); */
   margin: 0;
   width: 100%;
-  height: 100%;
+  height: 120%;
   font-family: 'Raleway', sans-serif;
   position: absolute;
   -webkit-transform: translate(-50%, -50%);
@@ -169,30 +170,28 @@ body {
 }
 
 .name {
+  z-index:2;
+  margin: 1rem 0rem;
+  align-self: flex-start;
   font-weight: 800;
-  width:80%;
-  height:80%;
+  width:100%;
+  height:180%;
   /* border: 2px solid black; */
   color: transparent;
-  font-size: 3rem;
+  font-size: 90px;
   background: url("https://phandroid.s3.amazonaws.com/wp-content/uploads/2014/05/rainbow-nebula.jpg") repeat;
   background-position: 40% 50%;
   -webkit-background-clip: text;
   background-clip:text;
-  position: relative;
   text-align: left;
   line-height: 70px;
   letter-spacing: 1px;
 }
 
 .profileStats {
-  /*  border:2px solid black; */
-   height: 55vh;
-   width:34vw;
-   color:black;
-   position:relative;
-   left:35vw;
-   top:3vh;
+ /*  background-color: seagreen; */
+  width:100vw;
+  margin:1rem;
  }
  
  .stat{
@@ -213,6 +212,15 @@ body {
    font-family: 'Bungee Shade', sans-serif;
    font-size: 1.35rem;
    background-color:white;
+ }
+
+ .profile {
+   margin:1rem;
+  /*  border: 2px solid black; */
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-content: center;
  }
  
 
