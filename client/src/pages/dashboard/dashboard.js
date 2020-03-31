@@ -96,9 +96,44 @@ const Profile = ({ changeBlur, showProfile }) => {
   );
 };
 
+const CreateRoom = ({ changeBlur, showCR }) => {
+  return (
+    <>
+      <img
+        className="closeBtn"
+        onClick={() => {
+          slideOut();
+          changeBlur("none");
+          showCR(false);
+        }}
+        src="https://img.icons8.com/ios/50/000000/close-window.png"
+      />
+
+      <div className="crWrapper">
+        <div className="display">
+          <div className="crtitle">Create Room</div>
+          <div className="desc">
+            Fill the form to your right <br /> to begin
+          </div>
+        </div>
+        <form action="" className="crForm  ">
+          <label htmlFor="roomName">Room Name</label> <br />
+          <input name="roomName" type="text" /> <br />
+          <label htmlFor="pwd">Password</label> <br />
+          <input name="pwd" type="password" />
+          <button className="crSubmit" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
+    </>
+  );
+};
+
 function DashBoard(props) {
   let [blur, changeBlur] = useState("none");
   let [profile, showProfile] = useState(false);
+  let [createRoom, showCR] = useState(false);
   useEffect(() => {
     const tl = gsap.timeline();
     tl.to(".DashBegin", { width: toPX("100vw") }, 1); //blue screen
@@ -167,6 +202,7 @@ function DashBoard(props) {
               onClick={() => {
                 changeBlur("inline");
                 slideIn();
+                showCR(true);
               }}
             >
               Create Room
@@ -191,6 +227,7 @@ function DashBoard(props) {
         {profile && (
           <Profile showProfile={showProfile} changeBlur={changeBlur} />
         )}
+        {createRoom && <CreateRoom showCR={showCR} changeBlur={changeBlur} />}
       </div>
     </div>
   );

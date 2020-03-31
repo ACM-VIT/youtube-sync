@@ -222,5 +222,78 @@ body {
    justify-content: center;
    align-content: center;
  }
+
+ .crWrapper{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: 2rem;
+   /* border:1px solid black; */
+   width:95%;
+   height:100%;
+   padding:2rem 4rem;
+   box-sizing: border-box;
+ }
+
+ .crForm {
+   box-sizing:border-box;
+  background: linear-gradient(#ed213a, #93291e);
+ /*  background: linear-gradient(#93291e,#ed213a); */
+   /* border:5px solid black; */
+   width:25vw;
+   height:60vh;
+   padding: 5rem 4.5rem;
+   border-radius: 8px;
+   color:white;
+ }
+
+input {
+  padding:10px;
+  border:0;
+  box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+  padding:10px;
+  border-radius:10px;
+  margin-top:10px;
+  margin-bottom:2em;  
+}
+
+.display {
+  width:10vw;
+  height:50vh;
+ display: flex;
+ flex-direction: column;
+/*  border: 2px solid black; */
+ color:rgb(122, 122, 122);
+ padding:0.1rem 2rem;
+ font-size:2rem;
+}
+
+.crtitle {
+  color: black;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
+
+.crSubmit {
+  background-color: transparent;
+  color:white;
+  font-size: 2rem;
+  font-family: Oswald, 'Times New Roman', Times, serif;
+  margin: 0 auto;
+  transform:translate(2%,60%);
+}
+
+.crSubmit:hover {
+  text-decoration: underline;
+}
+.crtitle{
+   font-size:5rem;
+   font-weight: bold;
+   margin-bottom: 3rem;
+}
+
+
+
+
  
 
