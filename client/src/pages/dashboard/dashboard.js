@@ -96,7 +96,7 @@ const Profile = ({ changeBlur, showProfile }) => {
   );
 };
 
-const CreateRoom = ({ changeBlur, showCR }) => {
+const CreateRoom = ({ changeBlur, showCR, title, desc }) => {
   return (
     <>
       <img
@@ -111,10 +111,40 @@ const CreateRoom = ({ changeBlur, showCR }) => {
 
       <div className="crWrapper">
         <div className="display">
-          <div className="crtitle">Create Room</div>
-          <div className="desc">
-            Fill the form to your right <br /> to begin
-          </div>
+          <div className="crtitle">{title}</div>
+          <div className="desc">{desc}</div>
+        </div>
+        <form action="" className="crForm  ">
+          <label htmlFor="roomName">Room Name</label> <br />
+          <input name="roomName" type="text" /> <br />
+          <label htmlFor="pwd">Password</label> <br />
+          <input name="pwd" type="password" />
+          <button className="crSubmit" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
+    </>
+  );
+};
+
+const JoinRoom = ({ changeBlur, showJR, title, desc }) => {
+  return (
+    <>
+      <img
+        className="closeBtn"
+        onClick={() => {
+          slideOut();
+          changeBlur("none");
+          showJR(false);
+        }}
+        src="https://img.icons8.com/ios/50/000000/close-window.png"
+      />
+
+      <div className="crWrapper">
+        <div className="display">
+          <div className="crtitle">{title}</div>
+          <div className="desc">{desc}</div>
         </div>
         <form action="" className="crForm  ">
           <label htmlFor="roomName">Room Name</label> <br />
@@ -134,6 +164,7 @@ function DashBoard(props) {
   let [blur, changeBlur] = useState("none");
   let [profile, showProfile] = useState(false);
   let [createRoom, showCR] = useState(false);
+  let [joinRoom, showJR] = useState(false);
   useEffect(() => {
     const tl = gsap.timeline();
     tl.to(".DashBegin", { width: toPX("100vw") }, 1); //blue screen
@@ -213,6 +244,7 @@ function DashBoard(props) {
               onClick={() => {
                 changeBlur("inline");
                 slideIn();
+                showJR(true);
               }}
             >
               Join Room
@@ -227,7 +259,22 @@ function DashBoard(props) {
         {profile && (
           <Profile showProfile={showProfile} changeBlur={changeBlur} />
         )}
-        {createRoom && <CreateRoom showCR={showCR} changeBlur={changeBlur} />}
+        {createRoom && (
+          <CreateRoom
+            showCR={showCR}
+            changeBlur={changeBlur}
+            title="Create Room"
+            desc="Fill the form to your right to begin"
+          />
+        )}
+        {joinRoom && (
+          <JoinRoom
+            showJR={showJR}
+            changeBlur={changeBlur}
+            title="Join Room"
+            desc="Fill the form to your right to begin"
+          />
+        )}
       </div>
     </div>
   );
