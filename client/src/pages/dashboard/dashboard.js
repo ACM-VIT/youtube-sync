@@ -114,7 +114,7 @@ const CreateRoom = ({ changeBlur, showCR, title, desc }) => {
           <div className="crtitle">{title}</div>
           <div className="desc">{desc}</div>
         </div>
-        <form action="" className="crForm  ">
+        <form action="/screen" method="GET" className="crForm  ">
           <label htmlFor="roomName">Room Name</label> <br />
           <input name="roomName" type="text" /> <br />
           <label htmlFor="pwd">Password</label> <br />
@@ -146,7 +146,7 @@ const JoinRoom = ({ changeBlur, showJR, title, desc }) => {
           <div className="crtitle">{title}</div>
           <div className="desc">{desc}</div>
         </div>
-        <form action="" className="crForm  ">
+        <form action="/screen" method="GET" className="crForm  ">
           <label htmlFor="roomName">Room Name</label> <br />
           <input name="roomName" type="text" /> <br />
           <label htmlFor="pwd">Password</label> <br />
