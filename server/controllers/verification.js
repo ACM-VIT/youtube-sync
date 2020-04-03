@@ -20,7 +20,7 @@ const loginValidation = async (data) => {
 
 const roomValidation = async (data) => {
   const schema = Joi.object({
-    room: Joi.string()
+    name: Joi.string()
       .required()
       .min(1),
     pwd: Joi.string()
