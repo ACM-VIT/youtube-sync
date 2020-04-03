@@ -95,6 +95,26 @@ const Profile = ({ changeBlur, showProfile }) => {
     </>
   );
 };
+const onSubmit = (text, e) => {
+  e.preventDefault();
+  console.log(text);
+  const room = {
+    name: document.querySelector('form input[name="roomName"]').value,
+    pwd: document.querySelector('form input[name="pwd"]').value
+  };
+  fetch(`http://localhost:5000/api/${text}`, {
+    method: "POST",
+    body: JSON.stringify(room),
+    headers: { "Content-Type": "application/json" }
+  }).then((response) => {
+    const data = response.json();
+    if (response.status != 200) {
+      alert("ERROR ");
+      return null;
+    }
+    return (window.location.href = "/screen");
+  });
+};
 
 const CreateRoom = ({ changeBlur, showCR, title, desc }) => {
   return (
@@ -114,7 +134,7 @@ const CreateRoom = ({ changeBlur, showCR, title, desc }) => {
           <div className="crtitle">{title}</div>
           <div className="desc">{desc}</div>
         </div>
-        <form action="/screen" method="GET" className="crForm  ">
+        <form className="crForm " onSubmit={(e) => onSubmit("createRoom", e)}>
           <label htmlFor="roomName">Room Name</label> <br />
           <input name="roomName" type="text" /> <br />
           <label htmlFor="pwd">Password</label> <br />
@@ -146,7 +166,7 @@ const JoinRoom = ({ changeBlur, showJR, title, desc }) => {
           <div className="crtitle">{title}</div>
           <div className="desc">{desc}</div>
         </div>
-        <form action="/screen" method="GET" className="crForm  ">
+        <form onSubmit={(e) => onSubmit("joinRoom", e)} className="crForm ">
           <label htmlFor="roomName">Room Name</label> <br />
           <input name="roomName" type="text" /> <br />
           <label htmlFor="pwd">Password</label> <br />

@@ -4,8 +4,11 @@ const { roomValidation } = require("./verification");
 
 const createRoom = async (req, res) => {
   const error = await roomValidation(req.body);
-  console.log(error);
   if (error) return res.json({ success: false, err: error.details[0].message });
+
+  const roomExists = await Room.findOne({ name: req.body.name });
+  if (roomExists)
+    return res.status(404).json({ success: false, msg: "Room already exists" });
 
   const salt = await bcrypt.genSaltSync(10);
   const hashedpwd = await bcrypt.hashSync(req.body.pwd, salt);
@@ -26,7 +29,6 @@ const createRoom = async (req, res) => {
 
 const joinRoom = async (req, res) => {
   const error = await roomValidation(req.body);
-  console.log(error);
   if (error) return res.json({ success: false, err: error.details[0].message });
 
   const room = await Room.findOne({ name: req.body.name });

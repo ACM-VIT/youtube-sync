@@ -17,33 +17,33 @@ const responseGoogle = (response) => {
   });
 };
 
-const userDB = new Promise(async (resolve, reject) => {
-  let user = {
-    name: JSON.parse(sessionStorage.getItem("userYS")).name
-  };
-  console.log(JSON.stringify(user));
-  try {
-    const response = await fetch("http://localhost:5000/api/login", {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: { "Content-Type": "application/json" }
-    });
-    const data = await response.json();
-    console.log(data);
-    resolve(data);
-  } catch (err) {
-    reject(err);
-  }
-});
+const userDB = () => {
+  return new Promise(async (resolve, reject) => {
+    const userObj = JSON.parse(sessionStorage.getItem("userYS"));
+    if (!userObj) reject();
+    let user = {
+      name: userObj.name
+    };
+    console.log(JSON.stringify(user));
+    try {
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: { "Content-Type": "application/json" }
+      });
+      const data = await response.json();
+      await sessionStorage.setItem("user", JSON.stringify(data));
+      resolve(data);
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
 
 const login = async (response) => {
   console.log(response);
-  await responseGoogle(response);
-  await userDB();
-};
-
-const redirect = (response) => {
-  login(response)
+  const tasks = [responseGoogle(response), userDB()];
+  Promise.all(tasks)
     .then((window.location.href = "/dashboard"))
     .catch((err) => console.error(err));
 };
@@ -88,7 +88,7 @@ function LandingPage(props) {
             )}
             clientId="403059120816-7q0nfehr1190g100vt65ms7qg7engls1.apps.googleusercontent.com"
             buttonText="Login"
-            onSuccess={redirect}
+            onSuccess={login}
             onFailure={googleFail}
             cookiePolicy={"single_host_origin"}
           />
