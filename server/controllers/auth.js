@@ -1,67 +1,49 @@
 const User = require("../models/User");
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { loginValidation } = require("./verification");
 /*
   UserSchema:
    name: {
     type: String
   },
-  handle: {
-    type: String
-  },
-  password:{
-
-  }
   noOfSyncs: {
     type: Number
   },
-  friends: {
+ createdAt: {
     type:[String]
 */
 
-const signUp = async (req, res) => {
-  const newUser = { ...req.body };
-  //TODO: VALIDATE req.body
+const login = async (req, res) => {
+  if (!req.body.name)
+    return res.status(500).json({ success: false, msg: "No name in req" });
 
-  const handleExists = await User.findOne({ handle: newUser.handle });
-  if (handleExists)
-    return res.status(404).json({ sucess: false, error: "handle exists" });
+  const token = jwt.sign({ name: req.body.name }, process.env.TOKEN_SECRET);
+  if (!token)
+    return res
+      .status(500)
+      .json({ sucess: false, msg: "Failed to issue token" });
 
-  const salt = await bcrypt.genSaltSync(10);
-  const hashedPwd = await bcrypt.hashSync(newUser.pwd, salt);
-  newUser.pwd = hashedPwd;
+  const dbUser = await User.findOne({ name: req.body.name });
+  if (dbUser) return res.json({ success: true, user: dbUser, token });
+
+  const newUser = {
+    ...req.body,
+    noOfSyncs: 0,
+    createdAt: new Date().toLocaleDateString()
+  };
+
+  const { error } = loginValidation(newUser);
+  if (error) return res.status(500).json({ success: false, err: error });
 
   try {
-    const dbUser = await User.create(newUser);
-    return res.json({ sucess: true, user: dbUser });
+    const user = await User.create(newUser);
+    return res.json({ success: true, user, token });
   } catch (err) {
-    console.error(err);
-    res.status(400).json({ success: false, error: "Signin Failed" });
+    console.log(err);
+    return res.status(500).json({ success: false, err });
   }
 };
 
-const login = async (req, res) => {
-  const { handle } = req.body;
-  //TODO:Validate req.body
-
-  const user = await User.findOne({ handle });
-  if (!user)
-    return res
-      .status(404)
-      .json({ success: false, error: `User does not exist` });
-
-  const validPassword = await bcrypt.compare(req.body.pwd, user.pwd);
-  if (!validPassword)
-    return res.status(404).json({ success: false, error: "invalid password" });
-
-  const token = jwt.sign(
-    { _id: user._id },
-    process.env.TOKEN_SECRET || "testlalal"
-  );
-  return res.header("authorization", token).json({ token });
-};
-
 module.exports = {
-  signUp,
   login
 };

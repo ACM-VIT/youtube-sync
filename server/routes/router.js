@@ -6,7 +6,6 @@ router.get("/", (req, res) => {
 });
 
 //auth part of api
-router.post("/signUp", auth.signUp);
 router.post("/login", auth.login);
 //TODO:signout route
 

@@ -5,12 +5,47 @@ import Loader from "./loader";
 import "./landingPage.css";
 import BannerImage from "../../static/images/youtubeBG.jpg";
 
-const responseGoogle = async (response) => {
-  return sessionStorage.setItem("userYS", JSON.stringify(response.profileObj));
+const responseGoogle = (response) => {
+  return new Promise((resolve, reject) => {
+    try {
+      sessionStorage.setItem("userYS", JSON.stringify(response.profileObj));
+      console.log(response);
+      resolve();
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
+const userDB = new Promise(async (resolve, reject) => {
+  let user = {
+    name: JSON.parse(sessionStorage.getItem("userYS")).name
+  };
+  console.log(JSON.stringify(user));
+  try {
+    const response = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      body: JSON.stringify(user),
+      headers: { "Content-Type": "application/json" }
+    });
+    const data = await response.json();
+    console.log(data);
+    resolve(data);
+  } catch (err) {
+    reject(err);
+  }
+});
+
+const login = async (response) => {
+  console.log(response);
+  await responseGoogle(response);
+  await userDB();
 };
 
 const redirect = (response) => {
-  responseGoogle(response).then((window.location.href = "/dashboard"));
+  login(response)
+    .then((window.location.href = "/dashboard"))
+    .catch((err) => console.error(err));
 };
 
 const googleFail = (response) => {

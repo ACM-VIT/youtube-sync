@@ -2,19 +2,16 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   name: {
-    type: String
-  },
-  handle: {
-    type: String
+    type: String,
+    required: true
   },
   noOfSyncs: {
-    type: Number
+    type: Number,
+    required: true
   },
-  pwd: {
-    type: String
-  },
-  friends: {
-    type: [String]
+  createdAt: {
+    type: String,
+    required: true
   }
 });
 

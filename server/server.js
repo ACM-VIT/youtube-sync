@@ -1,4 +1,5 @@
 require("./models/dbInit");
+require("dotenv").config();
 const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
