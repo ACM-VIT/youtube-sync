@@ -12,9 +12,9 @@ let socket;
 const Chat = () => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
-  const [users, setUsers] = useState("");
-  const [message, setMessages] = useState("");
-  const [messages, setMessage] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
   const ENDPOINT = "http://localhost:5000/";
 
   useEffect(() => {
@@ -39,6 +39,7 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("message", (message) => {
+      console.log("SET MESSAGES ACTIVATE", message);
       setMessages([...messages, message]);
     });
     socket.on("roomData", ({ users }) => {
@@ -48,13 +49,13 @@ const Chat = () => {
       socket.emit("disconnect");
       socket.off();
     };
-  }, [messages]);
+  });
 
   const sendMessage = (event) => {
     event.preventDefault();
 
     if (message) {
-      socket.emit("sendMessage", message, () => setMessages(""));
+      socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
 
