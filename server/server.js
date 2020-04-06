@@ -10,6 +10,12 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 const router = require("./routes/router");
+const {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom
+} = require("./controllers/users");
 
 app
   .use(cors())
@@ -19,7 +25,6 @@ app
 io.on("connect", (socket) => {
   socket.on("join", ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
-
     if (error) return callback(error);
 
     socket.join(user.room);

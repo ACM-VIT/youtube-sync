@@ -6,4 +6,4 @@ mongoose
     useUnifiedTopology: true
   })
   .then(() => console.log(`DB Connection successful`))
-  .catch((err) => console.console.error("dberror: ", err));
+  .catch((err) => console.error("dberror: ", err));

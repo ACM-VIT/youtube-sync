@@ -102,6 +102,7 @@ const onSubmit = (text, e) => {
     name: document.querySelector('form input[name="roomName"]').value,
     pwd: document.querySelector('form input[name="pwd"]').value
   };
+  sessionStorage.setItem("room", JSON.stringify(room));
   fetch(`http://localhost:5000/api/${text}`, {
     method: "POST",
     body: JSON.stringify(room),
