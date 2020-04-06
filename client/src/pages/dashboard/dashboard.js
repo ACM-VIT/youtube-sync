@@ -188,7 +188,7 @@ function DashBoard(props) {
   let [joinRoom, showJR] = useState(false);
   useEffect(() => {
     const tl = gsap.timeline();
-    tl.to(".DashBegin", { width: toPX("100vw"), duration: 1 }, 0); //blue screen
+    tl.to(".DashBegin", { width: toPX("100vw"), duration: 1 }, 1); //blue screen
     tl.to(".dashTitle", { opacity: 1, duration: 1.3 }, "-=0.5"); //title comes in
     tl.to(".DashBegin", { x: toPX("100vw"), duration: 0.8 }, ">"); //bluescreen fade out
     /*  tl.to(".dashWrapper", { width: toPX("100vw") }, ">"); //actual dash in */
