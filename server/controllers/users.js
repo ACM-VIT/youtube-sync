@@ -1,3 +1,5 @@
+const Room = require("../models/room");
+
 const users = [];
 
 const addUser = ({ id, name, room }) => {
@@ -7,7 +9,9 @@ const addUser = ({ id, name, room }) => {
   if (!name || !room) return { error: "Username and room are required." };
   if (existingUser) return { error: "Username is taken." };
 
-  const user = { id, name, room };
+  const admin = users.length === 0 ? true : false;
+
+  const user = { id, name, room, admin };
 
   users.push(user);
   console.log("users array", users);
@@ -17,8 +21,17 @@ const addUser = ({ id, name, room }) => {
 
 const removeUser = (id) => {
   const index = users.findIndex((user) => user.id === id);
+  const u = users[index];
 
-  if (index !== -1) return users.splice(index, 1)[0];
+  if (index !== -1) {
+    if (u.admin && users.length >= 2) users[index + 1].admin = true;
+    if (users.length - 1 === 0) {
+      Room.deleteMany({ name: u.room }).then(
+        console.log("successFully removed room")
+      );
+    }
+    return users.splice(index, 1)[0];
+  }
 };
 
 const getUser = (id) => users.find((user) => user.id === id);

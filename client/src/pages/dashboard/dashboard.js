@@ -234,6 +234,16 @@ function DashBoard(props) {
               showProfile(true);
             }}
           >
+            {/*    <img
+              src={JSON.parse(sessionStorage.getItem("userYS")).imageUrl}
+              alt="Not found"
+              className="avatar"
+              style={{
+                alignSelf: "start !important",
+                width: "30px",
+                height: "40px"
+              }}
+            /> */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 23 25"

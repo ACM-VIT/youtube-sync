@@ -23,7 +23,7 @@ const Chat = () => {
 
     setName(userObj.name);
     setRoom(roomObj.name);
-  });
+  }, []);
 
   useEffect(() => {
     socket = io(ENDPOINT);
