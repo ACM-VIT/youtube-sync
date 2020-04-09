@@ -1,5 +1,5 @@
-require("./models/dbInit");
 require("dotenv").config();
+require("./models/dbInit");
 const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
@@ -42,12 +42,13 @@ io.on("connect", (socket) => {
       users: getUsersInRoom(user.room)
     });
 
+    io.to(user.room).emit("adminCheck", { isAdmin: user.admin });
+
     callback();
   });
 
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
-    console.log(user);
     io.to(user.room).emit("message", { user: user.name, text: message });
 
     callback();

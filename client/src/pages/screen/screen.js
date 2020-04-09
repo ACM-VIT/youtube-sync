@@ -1,17 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import io from "socket.io-client";
 import "./screen.css";
 
 import Chat from "../../components/Chat/Chat";
 
-function Screen() {
+let socket;
+
+const Screen = () => {
+  const [name, setName] = useState("");
+  const [room, setRoom] = useState("");
+  const [users, setUsers] = useState([]);
+  const [admin, setAdmin] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const ENDPOINT = "http://localhost:5000/";
+
+  useEffect(() => {
+    const userObj = JSON.parse(sessionStorage.getItem("userYS"));
+    const roomObj = JSON.parse(sessionStorage.getItem("room"));
+
+    setName(userObj.name);
+    setRoom(roomObj.name);
+  }, []);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    if (!name || !room) return;
+    console.log(name, room);
+    socket.emit("join", { name, room }, (err) => {
+      if (err) {
+        console.log(err);
+        alert(err);
+      }
+    });
+  }, [name, room]);
+
+  useEffect(() => {
+    socket.on("adminCheck", ({ isAdmin }) => {
+      console.log("SET ADMIN ACTIVATE", isAdmin);
+      setAdmin(isAdmin);
+    });
+    socket.on("message", (message) => {
+      console.log("SET MESSAGES ACTIVATE", message);
+      setMessages([...messages, message]);
+    });
+    socket.on("roomData", ({ users }) => {
+      setUsers({ users });
+    });
+    return () => {
+      socket.emit("disconnect");
+      socket.off();
+    };
+  });
+
+  const sendMessage = (event) => {
+    event.preventDefault();
+
+    if (message) {
+      socket.emit("sendMessage", message, () => setMessage(""));
+    }
+  };
   return (
     <div className="screenWrapper">
       <div className="Movie"></div>
       <div className="Chat">
-        <Chat />
+        <Chat
+          name={name}
+          room={room}
+          setMessage={setMessage}
+          sendMessage={sendMessage}
+          message={message}
+          messages={messages}
+        />
       </div>
     </div>
   );
-}
+};
 
 export default Screen;
