@@ -14,7 +14,7 @@ const {
   addUser,
   removeUser,
   getUser,
-  getUsersInRoom
+  getUsersInRoom,
 } = require("./controllers/users");
 
 app
@@ -31,7 +31,7 @@ io.on("connect", (socket) => {
 
     socket.emit("message", {
       user: "admin",
-      text: `${user.name}, welcome to room ${user.room}.`
+      text: `${user.name}, welcome to room ${user.room}.`,
     });
     socket.broadcast
       .to(user.room)
@@ -39,7 +39,7 @@ io.on("connect", (socket) => {
 
     io.to(user.room).emit("roomData", {
       room: user.room,
-      users: getUsersInRoom(user.room)
+      users: getUsersInRoom(user.room),
     });
 
     io.to(user.room).emit("adminCheck", { isAdmin: user.admin });
@@ -60,11 +60,11 @@ io.on("connect", (socket) => {
     if (user) {
       io.to(user.room).emit("message", {
         user: "Admin",
-        text: `${user.name} has left.`
+        text: `${user.name} has left.`,
       });
       io.to(user.room).emit("roomData", {
         room: user.room,
-        users: getUsersInRoom(user.room)
+        users: getUsersInRoom(user.room),
       });
     }
   });
@@ -80,7 +80,7 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode).json({
-    error: error.message
+    error: error.message,
   });
 });
 
