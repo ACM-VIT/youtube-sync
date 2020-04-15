@@ -50,7 +50,12 @@
 
 .adminPanel div {
   /* border: 3px solid blue; */
-  width: 50%;
+  width: 80%;
+}
+
+.adminPanel hr {
+  height: 400px;
+  transform: translate(30%,25%);
 }
 
 .dash {
@@ -72,6 +77,8 @@
   position: absolute;
   bottom:5%;
 }
+
+
 
 
 

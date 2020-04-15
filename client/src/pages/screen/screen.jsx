@@ -44,6 +44,7 @@ const AdminPanel = ({ setAdminDisplay, room }) => {
           <br />
           <span className="apRoom">{room}</span>
         </div>
+        <hr />
         <div>CONTROLS</div>
       </div>
     </>
