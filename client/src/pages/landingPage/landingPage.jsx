@@ -10,6 +10,7 @@ import './landingPage.css';
 const responseGoogle = (response) => new Promise((resolve, reject) => {
   try {
     sessionStorage.setItem('userYS', JSON.stringify(response.profileObj));
+    sessionStorage.setItem('authYS', JSON.stringify(response.tc));
     console.log(response);
     resolve();
   } catch (err) {
@@ -29,7 +30,7 @@ const userDB = () => new Promise(async (resolve, reject) => {
     const response = await fetch('http://localhost:5000/api/login', {
       method: 'POST',
       body: JSON.stringify(user),
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-type': 'application/json' },
     });
     const data = await response.json();
     await sessionStorage.setItem('user', JSON.stringify(data));
@@ -43,7 +44,7 @@ const login = async (response) => {
   console.log(response);
   const tasks = [responseGoogle(response), userDB()];
   Promise.all(tasks)
-    .then((window.location.href = '/dashboard'))
+    .then((/* console.log('DEBUG') */window.location.href = '/dashboard'))
     .catch((err) => console.error(err));
 };
 
@@ -95,6 +96,7 @@ function LandingPage() {
             onSuccess={login}
             onFailure={googleFail}
             cookiePolicy="single_host_origin"
+            scope="https://www.googleapis.com/auth/youtube"
           />
         </div>
       )}

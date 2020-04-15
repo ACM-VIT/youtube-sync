@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+html,body {
+  height:100%;
+}
+
 .screenWrapper {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -58,6 +62,20 @@
   transform: translate(30%,25%);
 }
 
+.adminPanel  form {
+  text-align: right;
+  font-family:"Times New Roman MS",sans-serif;
+  font-size:1rem;
+  color: white;
+  /*  border :1px solid yellow; */
+   position:absolute;
+   top:50%;
+   right:10%;
+   transform: translateY(-50%);
+   height:40vh;
+   width:25vw;
+}
+
 .dash {
   background-color: white;
   width:90px !important;
@@ -77,10 +95,92 @@
   position: absolute;
   bottom:5%;
 }
+.btn-c {
+  position: absolute;
+  bottom:-60%;
+  right:0%;
+  width: 56px;
+  height: 56px;
+  background: #000;
+  border: 0;
+  border-radius: 100%;
+  outline: none;
+  box-shadow: -0.5px 1px 30px rgba(114, 114, 114, 0.2);
+  cursor: pointer;
+}
+.btn-c:after {
+  position: absolute;
+  opacity: 0;
+  left: 17px;
+  top: 17px;
+  content: '';
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fff;
+  border-right: 2px solid transparent;
+  border-radius: 100%;
+  transform: rotate(45deg);
+}
+.btn-c svg {
+  position: relative;
+  top: 2px;
+  opacity: 1;
+}
+.btn-c svg path {
+  fill: #fff;
+}
 
+.btn-c.active svg {
+  opacity: 0;
+}
 
+.btn-c.active:after {
+  opacity: 1;
+  animation: r360 0.8s linear infinite;
+}
+.btn-c.active svg {
+  opacity: 0;
+}
 
+@-moz-keyframes r360 {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes r360 {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes r360 {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes r360 {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
-
-
+#player {
+  box-sizing: border-box;
+  height:100vh;
+  position: absolute;
+  top:0;
+  left:0;
+  width:75%;
+}
 
