@@ -20,7 +20,7 @@ function toPX(value) {
 let socket;
 
 
-const AdminPanel = ({ setAdminDisplay }) => {
+const AdminPanel = ({ setAdminDisplay, room }) => {
   useEffect(() => {
     const tl = gsap.timeline();
     tl.to('.adminPanel', {
@@ -33,7 +33,17 @@ const AdminPanel = ({ setAdminDisplay }) => {
     <>
       <div className="blur" />
       <div className="adminPanel">
-        <div>ADMIN</div>
+        <div className="apTitle">
+          <div className="dash" />
+          <br />
+          <span>
+            ROOM ADMIN
+            <br />
+            PAGE
+          </span>
+          <br />
+          <span className="apRoom">{room}</span>
+        </div>
         <div>CONTROLS</div>
       </div>
     </>
@@ -98,7 +108,7 @@ const Screen = () => {
   };
   return (
     <>
-      {adminDisplay && <AdminPanel setAdminDisplay={setAdminDisplay} />}
+      {adminDisplay && <AdminPanel setAdminDisplay={setAdminDisplay} room={room} />}
       <div className="screenWrapper">
         <div className="Movie" />
         <div className="Chat">
