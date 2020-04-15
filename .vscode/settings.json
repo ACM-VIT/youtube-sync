@@ -1,5 +1,11 @@
 {
+  "editor.codeActionsOnSave": "source.fixAll.eslint",
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
-  }
+  },
+  "eslint.workingDirectories": [],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.codeAction.disableRuleComment": {}
 }

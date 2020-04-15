@@ -1,21 +1,44 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import gsap from 'gsap';
 import './screen.css';
 
 import Chat from '../../components/Chat/Chat';
 
+function toPX(value) {
+  return (
+    (parseFloat(value) / 100)
+    * (/vh/gi.test(value) ? window.innerHeight : window.innerWidth)
+  );
+}
+
 let socket;
 
-const AdminPanel = () => (
-  <>
-    <div className="blur" />
-    <div className="adminPanel" />
-  </>
-);
+
+const AdminPanel = ({ setAdminDisplay }) => {
+  useEffect(() => {
+    const tl = gsap.timeline();
+    tl.to('.adminPanel', {
+      width: toPX('70vw'),
+      ease: 'ease-in',
+      duration: 1,
+    }, 0);
+  }, []);
+  return (
+    <>
+      <div className="blur" />
+      <div className="adminPanel">
+        <div>ADMIN</div>
+        <div>CONTROLS</div>
+      </div>
+    </>
+  );
+};
 
 const Screen = () => {
   const [name, setName] = useState('');
@@ -74,20 +97,22 @@ const Screen = () => {
     }
   };
   return (
-    <div className="screenWrapper">
-      {adminDisplay && <AdminPanel />}
-      <div className="Movie" />
-      <div className="Chat">
-        <Chat
-          name={name}
-          room={room}
-          setMessage={setMessage}
-          sendMessage={sendMessage}
-          message={message}
-          messages={messages}
-        />
+    <>
+      {adminDisplay && <AdminPanel setAdminDisplay={setAdminDisplay} />}
+      <div className="screenWrapper">
+        <div className="Movie" />
+        <div className="Chat">
+          <Chat
+            name={name}
+            room={room}
+            setMessage={setMessage}
+            sendMessage={sendMessage}
+            message={message}
+            messages={messages}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
