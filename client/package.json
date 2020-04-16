@@ -23,7 +23,7 @@
     "videojs-youtube": "^2.6.1"
   },
   "scripts": {
-    "start": "BROWSER=brave react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
