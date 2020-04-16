@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default-member */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
@@ -9,7 +11,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import gsap from 'gsap';
 import Plyr from 'plyr';
-import ytSearch from '../../apiCalls/ytSearch';
+import ReactPlayer from 'react-player';
 import './screen.css';
 
 import Chat from '../../components/Chat/Chat';
@@ -91,18 +93,40 @@ const AdminPanel = ({ setAdminDisplay, room, setUrl }) => {
 const YTPLayer = ({ url }) => {
   let player = null;
   useEffect(() => {
-    player = new Plyr('#player');
+    player = new Plyr('#player', {
+      debug: true,
+      title: 'View From A Blue Moon',
+      iconUrl: 'dist/demo.svg',
+      keyboard: {
+        global: true,
+      },
+      tooltips: {
+        controls: true,
+      },
+      captions: {
+        active: true,
+      },
+      previewThumbnails: {
+        enabled: true,
+        src: [
+          'https://cdn.plyr.io/static/demo/thumbs/100p.vtt',
+          'https://cdn.plyr.io/static/demo/thumbs/240p.vtt',
+        ],
+      },
+      vimeo: {
+        // Prevent Vimeo blocking plyr.io demo site
+        referrerPolicy: 'no-referrer',
+      },
+    });
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }, []);
   return (
-    <div className="plyr__video-embed" id="player">
-      <iframe
-        src="https://www.youtube.com/embed/bTqVqk7FSmY?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1"
-        allowFullScreen
-        allowtransparency
-        allow="autoplay"
-        title="player"
-      />
-    </div>
+
+    <div id="player" data-plyr-provider="youtube" data-plyr-embed-id="bTqVqk7FSmY" />
+
   );
 };
 
@@ -165,12 +189,19 @@ const Screen = () => {
       socket.emit('sendMessage', message, () => setMessage(''));
     }
   };
+
+
   return (
     <>
       {adminDisplay && <AdminPanel setAdminDisplay={setAdminDisplay} room={room} setUrl={setUrl} />}
       <div className="screenWrapper">
         <div className="Movie">
-          {!adminDisplay && <YTPLayer url={url} />}
+          <ReactPlayer
+            url={url || null}
+            width="100%"
+            height="100%"
+            playing
+          />
         </div>
         <div className="Chat">
           <Chat
