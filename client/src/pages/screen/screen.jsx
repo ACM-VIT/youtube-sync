@@ -90,47 +90,6 @@ const AdminPanel = ({ setAdminDisplay, room, setUrl }) => {
 };
 
 
-const YTPLayer = ({ url }) => {
-  let player = null;
-  useEffect(() => {
-    player = new Plyr('#player', {
-      debug: true,
-      title: 'View From A Blue Moon',
-      iconUrl: 'dist/demo.svg',
-      keyboard: {
-        global: true,
-      },
-      tooltips: {
-        controls: true,
-      },
-      captions: {
-        active: true,
-      },
-      previewThumbnails: {
-        enabled: true,
-        src: [
-          'https://cdn.plyr.io/static/demo/thumbs/100p.vtt',
-          'https://cdn.plyr.io/static/demo/thumbs/240p.vtt',
-        ],
-      },
-      vimeo: {
-        // Prevent Vimeo blocking plyr.io demo site
-        referrerPolicy: 'no-referrer',
-      },
-    });
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-  }, []);
-  return (
-
-    <div id="player" data-plyr-provider="youtube" data-plyr-embed-id="bTqVqk7FSmY" />
-
-  );
-};
-
-
 const Screen = () => {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
@@ -140,7 +99,11 @@ const Screen = () => {
   const [adminDisplay, setAdminDisplay] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [player, initPlayer] = useState(null);
+  const [duration, setDuration] = useState(0);
+  const [playing, handlePlay] = useState(false);
   const ENDPOINT = 'http://localhost:5000/';
+
 
   useEffect(() => {
     const userObj = JSON.parse(sessionStorage.getItem('userYS'));
@@ -175,11 +138,29 @@ const Screen = () => {
     socket.on('roomData', ({ users }) => {
       setUsers({ users });
     });
+    socket.on('playerHandler', ({ playing, duration }) => {
+      if (!admin) {
+        handlePlay(playing);
+        setDuration(duration);
+        player.seekTo(duration, 'seconds');
+      } else {
+        console.log('reached');
+      }
+    });
     return () => {
       socket.emit('disconnect');
       socket.off();
     };
   });
+
+  useEffect(() => {
+    socket.emit('handlePlayPause', { playing, duration }, (err) => {
+      if (err) {
+        console.log(err);
+        alert(err);
+      }
+    });
+  }, [duration, playing]);
 
 
   const sendMessage = (event) => {
@@ -190,6 +171,25 @@ const Screen = () => {
     }
   };
 
+  const play = () => {
+    console.log('onPlay');
+    console.log(player);
+    const timestamp = player.getCurrentTime();
+    setDuration(timestamp);
+    handlePlay(true);
+  };
+
+  const pause = () => {
+    console.log('onPause');
+    console.log(player);
+    const timestamp = player.getCurrentTime();
+    setDuration(timestamp.toString());
+    handlePlay(false);
+  };
+  const ref = (pl) => {
+    initPlayer(pl);
+  };
+
 
   return (
     <>
@@ -197,10 +197,12 @@ const Screen = () => {
       <div className="screenWrapper">
         <div className="Movie">
           <ReactPlayer
+            ref={ref}
             url={url || null}
             width="100%"
             height="100%"
-            playing
+            onPlay={play}
+            onPause={pause}
           />
         </div>
         <div className="Chat">

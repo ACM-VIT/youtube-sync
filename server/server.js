@@ -15,6 +15,7 @@ const {
   removeUser,
   getUser,
   getUsersInRoom,
+  updateDuration
 } = require("./controllers/users");
 
 app
@@ -44,6 +45,19 @@ io.on("connect", (socket) => {
 
     io.to(user.room).emit("adminCheck", { isAdmin: user.admin });
 
+    socket.on("handlePlayPause", ({ playing, duration }, callback) => {
+      console.log(socket.id);
+      const user = getUser(socket.id);
+      console.log(user);
+      /*  if (!user.admin) return; */
+      if (user.admin) {
+        updateDuration(duration);
+        io.to(user.room).emit("playerHandler", { playing, duration });
+      }
+      callback();
+    })
+
+
     callback();
   });
 
@@ -53,6 +67,8 @@ io.on("connect", (socket) => {
 
     callback();
   });
+
+
 
   socket.on("disconnect", () => {
     const user = removeUser(socket.id);

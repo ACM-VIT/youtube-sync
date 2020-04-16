@@ -1,6 +1,11 @@
 const Room = require("../models/room");
 
 const users = [];
+let serverDuration = 0;
+
+const updateDuration = (duration) => {
+  serverDuration = duration;
+}
 
 const addUser = ({ id, name, room }) => {
   const existingUser = users.find(
@@ -38,4 +43,4 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
-module.exports = { addUser, removeUser, getUser, getUsersInRoom };
+module.exports = { addUser, removeUser, getUser, getUsersInRoom, updateDuration };
