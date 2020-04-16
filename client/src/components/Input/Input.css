@@ -1,0 +1,24 @@
+.form {
+    box-sizing:border-box;
+    white-space: nowrap;
+    display:inline-block
+}
+
+.input {
+    width:62%;
+    margin-right:0rem;
+    margin-left: 0.6rem;
+}
+
+
+.curvyBorder {
+    border-radius: 10px;
+}
+
+.sendButton {
+  background-color: #1762A7;
+  width:90px;
+  height:30px;
+  color:white;
+  transform: translateX(-19%);
+}
