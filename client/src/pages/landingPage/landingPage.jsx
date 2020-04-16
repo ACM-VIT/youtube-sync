@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { GoogleLogin } from 'react-google-login';
+import baseUrl from '../../baseUrl';
 import Loader from './loader';
 
 import './landingPage.css';
@@ -27,7 +28,7 @@ const userDB = () => new Promise(async (resolve, reject) => {
   };
   console.log(JSON.stringify(user));
   try {
-    const response = await fetch('http://localhost:5000/api/login', {
+    const response = await fetch(`${baseUrl}/api/login`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: { 'Content-type': 'application/json' },

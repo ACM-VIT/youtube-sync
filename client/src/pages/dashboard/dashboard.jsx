@@ -12,6 +12,7 @@ import React, { useState, useEffect } from 'react';
 import gsap from 'gsap';
 import './dashboard.css';
 import { GoogleLogout } from 'react-google-login';
+import baseUrl from '../../baseUrl';
 
 function toPX(value) {
   return (
@@ -119,7 +120,7 @@ const onSubmit = (text, e) => {
     pwd: document.querySelector('form input[name="pwd"]').value,
   };
   sessionStorage.setItem('room', JSON.stringify(room));
-  fetch(`http://localhost:5000/api/${text}`, {
+  fetch(`${baseUrl}/api/${text}`, {
     method: 'POST',
     body: JSON.stringify(room),
     headers: { 'Content-Type': 'application/json' },

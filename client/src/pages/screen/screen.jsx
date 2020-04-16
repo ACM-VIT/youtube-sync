@@ -10,8 +10,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import gsap from 'gsap';
-import Plyr from 'plyr';
 import ReactPlayer from 'react-player';
+import baseUrl from '../../baseUrl';
 import './screen.css';
 
 import Chat from '../../components/Chat/Chat';
@@ -102,7 +102,7 @@ const Screen = () => {
   const [player, initPlayer] = useState(null);
   const [duration, setDuration] = useState(0);
   const [playing, handlePlay] = useState(false);
-  const ENDPOINT = 'http://localhost:5000/';
+  const ENDPOINT = `${baseUrl}/`;
 
 
   useEffect(() => {
