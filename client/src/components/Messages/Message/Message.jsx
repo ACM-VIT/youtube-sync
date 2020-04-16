@@ -1,8 +1,9 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+import React from 'react';
 
-import "./Message.css";
+import './Message.css';
 
-import ReactEmoji from "react-emoji";
+import ReactEmoji from 'react-emoji';
 
 const Message = ({ message: { text, user }, name }) => {
   let isSentByCurrentUser = false;
