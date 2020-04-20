@@ -13,6 +13,7 @@ import gsap from 'gsap';
 import './dashboard.css';
 import { GoogleLogout } from 'react-google-login';
 import baseUrl from '../../baseUrl';
+import DashEnder from '../../components/DashEnder/DashEnder';
 
 function toPX(value) {
   return (
@@ -111,7 +112,7 @@ const Profile = ({ changeBlur, showProfile }) => {
     </>
   );
 };
-const onSubmit = (text, e) => {
+const onSubmit = (text, loadingStatus, e) => {
   e.preventDefault();
   console.log(text);
   const room = {
@@ -119,6 +120,7 @@ const onSubmit = (text, e) => {
     pwd: document.querySelector('form input[name="pwd"]').value,
   };
   sessionStorage.setItem('room', JSON.stringify(room));
+  loadingStatus(true);
   fetch(`${baseUrl}/api/${text}`, {
     method: 'POST',
     body: JSON.stringify(room),
@@ -128,12 +130,12 @@ const onSubmit = (text, e) => {
       alert('ERROR ');
       return null;
     }
-    return (window.location.href = '/screen');
+    return setTimeout(() => window.location.href = '/screen', 2500);
   });
 };
 
 const CreateRoom = ({
-  changeBlur, showCR, title, desc,
+  changeBlur, showCR, title, desc, loadingStatus,
 }) => (
   <>
     <img
@@ -151,7 +153,7 @@ const CreateRoom = ({
         <div className="crtitle">{title}</div>
         <div className="desc">{desc}</div>
       </div>
-      <form className="crForm " onSubmit={(e) => onSubmit('createRoom', e)}>
+      <form className="crForm " onSubmit={(e) => onSubmit('createRoom', loadingStatus, e)}>
         <label htmlFor="roomName">Room Name</label>
         {' '}
         <br />
@@ -171,7 +173,7 @@ const CreateRoom = ({
 );
 
 const JoinRoom = ({
-  changeBlur, showJR, title, desc,
+  changeBlur, showJR, title, desc, loadingStatus,
 }) => (
   <>
     <img
@@ -189,7 +191,7 @@ const JoinRoom = ({
         <div className="crtitle">{title}</div>
         <div className="desc">{desc}</div>
       </div>
-      <form onSubmit={(e) => onSubmit('joinRoom', e)} className="crForm ">
+      <form onSubmit={(e) => onSubmit('joinRoom', loadingStatus, e)} className="crForm ">
         <label htmlFor="roomName">Room Name</label>
         {' '}
         <br />
@@ -213,6 +215,7 @@ function DashBoard() {
   const [profile, showProfile] = useState(false);
   const [createRoom, showCR] = useState(false);
   const [joinRoom, showJR] = useState(false);
+  const [loading, loadingStatus] = useState(false);
   useEffect(() => {
     const tl = gsap.timeline();
     tl.to('.DashBegin', { width: toPX('100vw'), duration: 1 }, 1); // blue screen
@@ -321,6 +324,7 @@ function DashBoard() {
         )}
         {createRoom && (
           <CreateRoom
+            loadingStatus={loadingStatus}
             showCR={showCR}
             changeBlur={changeBlur}
             title="Create Room"
@@ -329,12 +333,14 @@ function DashBoard() {
         )}
         {joinRoom && (
           <JoinRoom
+            loadingStatus={loadingStatus}
             showJR={showJR}
             changeBlur={changeBlur}
             title="Join Room"
             desc="Fill the form to your right to begin"
           />
         )}
+        {loading && <DashEnder />}
       </div>
     </div>
   );

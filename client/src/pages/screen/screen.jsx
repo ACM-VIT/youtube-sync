@@ -15,6 +15,7 @@ import baseUrl from '../../baseUrl';
 import './screen.css';
 
 import Chat from '../../components/Chat/Chat';
+import VotingScreen from '../votingPage/votingPage';
 
 
 function toPX(value) {
@@ -89,6 +90,48 @@ const AdminPanel = ({ setAdminDisplay, room, setUrl }) => {
   );
 };
 
+const Room = ({
+  adminDisplay,
+  setAdminDisplay,
+  name,
+  room,
+  url,
+  setUrl,
+  ref,
+  play,
+  pause,
+  setMessage,
+  sendMessage,
+  message,
+  messages,
+}) => (
+  <>
+    {adminDisplay && <AdminPanel setAdminDisplay={setAdminDisplay} room={room} setUrl={setUrl} />}
+    <div className="screenWrapper">
+      <div className="Movie">
+        <ReactPlayer
+          ref={ref}
+          url={url || null}
+          width="100%"
+          height="100%"
+          onPlay={play}
+          onPause={pause}
+        />
+      </div>
+      <div className="Chat">
+        <Chat
+          name={name}
+          room={room}
+          setMessage={setMessage}
+          sendMessage={sendMessage}
+          message={message}
+          messages={messages}
+        />
+      </div>
+    </div>
+  </>
+);
+
 
 const Screen = () => {
   const [name, setName] = useState('');
@@ -123,7 +166,7 @@ const Screen = () => {
         alert(err);
       }
     });
-  }, [name, room]);
+  }, [name, room, ENDPOINT]);
 
   useEffect(() => {
     socket.on('adminCheck', ({ isAdmin }) => {
@@ -172,7 +215,7 @@ const Screen = () => {
         }
       });
     }
-  }, [url]);
+  }, [url, admin]);
 
   useEffect(() => {
     socket.emit('handlePlayPause', { playing, duration }, (err) => {
@@ -213,32 +256,21 @@ const Screen = () => {
 
 
   return (
-    <>
-      {adminDisplay && <AdminPanel setAdminDisplay={setAdminDisplay} room={room} setUrl={setUrl} />}
-      <div className="screenWrapper">
-        <div className="Movie">
-          <ReactPlayer
-            ref={ref}
-            url={url || null}
-            width="100%"
-            height="100%"
-            onPlay={play}
-            onPause={pause}
-          />
-        </div>
-        <div className="Chat">
-          <Chat
-            name={name}
-            room={room}
-            setMessage={setMessage}
-            sendMessage={sendMessage}
-            message={message}
-            messages={messages}
-          />
-        </div>
-      </div>
-      <link rel="stylesheet" href="https://cdn.plyr.io/3.5.10/plyr.css" />
-    </>
+    <Room
+      adminDisplay={adminDisplay}
+      setAdminDisplay={setAdminDisplay}
+      name={name}
+      room={room}
+      url={url}
+      setUrl={setUrl}
+      ref={ref}
+      play={play}
+      pause={pause}
+      setMessage={setMessage}
+      sendMessage={sendMessage}
+      message={message}
+      messages={messages}
+    />
   );
 };
 
