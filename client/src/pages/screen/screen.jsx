@@ -139,6 +139,7 @@ const Screen = () => {
       setUsers({ users });
     });
     socket.on('playerHandler', ({ playing, duration }) => {
+      console.log('DURATION ACTIVATE', playing, duration);
       if (!admin) {
         handlePlay(playing);
         setDuration(duration);
@@ -147,11 +148,31 @@ const Screen = () => {
         console.log('reached');
       }
     });
+    socket.on('clientUrl', (url) => {
+      console.log('Initial check');
+      console.log('');
+      if (!admin) {
+        console.log('SET URL ACTIVATE');
+        setUrl(url);
+      }
+    });
     return () => {
       socket.emit('disconnect');
       socket.off();
     };
   });
+
+  useEffect(() => {
+    console.log('SETURL', url, admin);
+    if (admin) {
+      socket.emit('setUrl', url, (err) => {
+        if (err) {
+          console.log(err);
+          alert(err);
+        }
+      });
+    }
+  }, [url]);
 
   useEffect(() => {
     socket.emit('handlePlayPause', { playing, duration }, (err) => {

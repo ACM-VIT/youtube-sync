@@ -1,10 +1,15 @@
 const Room = require("../models/room");
 
 const users = [];
+let videoUrl = null;
 let serverDuration = 0;
 
 const updateDuration = (duration) => {
   serverDuration = duration;
+}
+
+const setUrl = (url) => {
+  videoUrl = url;
 }
 
 const addUser = ({ id, name, room }) => {
@@ -43,4 +48,4 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
-module.exports = { addUser, removeUser, getUser, getUsersInRoom, updateDuration };
+module.exports = { addUser, removeUser, getUser, getUsersInRoom, updateDuration, setUrl };

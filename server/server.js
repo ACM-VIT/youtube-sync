@@ -15,7 +15,8 @@ const {
   removeUser,
   getUser,
   getUsersInRoom,
-  updateDuration
+  updateDuration,
+  setUrl
 } = require("./controllers/users");
 
 app
@@ -64,6 +65,14 @@ io.on("connect", (socket) => {
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
     io.to(user.room).emit("message", { user: user.name, text: message });
+
+    callback();
+  });
+
+  socket.on("setUrl", (url, callback) => {
+    const user = getUser(socket.id);
+    setUrl(url);
+    io.to(user.room).emit("clientUrl", { url });
 
     callback();
   });

@@ -89,7 +89,6 @@ const Profile = ({ changeBlur, showProfile }) => {
           <br />
           <div className="stat">
             joined
-            {' '}
             <br />
             <span>4th March 2020</span>
           </div>
