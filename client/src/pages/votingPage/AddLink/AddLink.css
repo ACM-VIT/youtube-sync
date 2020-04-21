@@ -1,0 +1,26 @@
+.alSubmit {
+    color:white;
+    background-color: rgb(255, 208, 56);
+    border-radius:50%;
+    padding:0.5rem; 
+    transition: background-color 1s ;
+  }
+
+  .alInput {
+    transform:translate(-5%,-8%);
+    width: 250px;
+  }
+  .AddLink {
+    text-align: left;
+    font-family:"Times New Roman MS",sans-serif;
+    font-size:1rem;
+    color: white;
+     /* border :1px solid yellow; */
+     position:absolute;
+     bottom:5%;
+     transform: translate(18%,-20%);
+     height:10vh;
+     width:25vw;
+     box-sizing: border-box;
+     white-space: nowrap;
+  }

@@ -1,15 +1,31 @@
 const Room = require("../models/room");
 
 const users = [];
-let videoUrl = null;
+let urls = [];
 let serverDuration = 0;
 
 const updateDuration = (duration) => {
   serverDuration = duration;
 }
 
-const setUrl = (url) => {
-  videoUrl = url;
+const setUrl = ({ url, room }) => {
+
+  const existingUrl = urls.find(
+    (arrUrl) => arrUrl.url === url && arrUrl.room === room
+  );
+  if (!url || !room) return { error: "Url and room required" };
+  if (existingUrl) return { error: "Url is already submitted" };
+
+  const dbUrl = {
+    url,
+    room,
+    upvotes: 0
+  }
+
+  urls.push(dbUrl);
+  console.log("dbUrls", urls);
+
+  return { dbUrl }
 }
 
 const addUser = ({ id, name, room }) => {
@@ -39,6 +55,7 @@ const removeUser = (id) => {
       Room.deleteMany({ name: u.room }).then(
         console.log("successFully removed room")
       );
+      urls = urls.filter(ele => ele.room != u.room);
     }
     return users.splice(index, 1)[0];
   }

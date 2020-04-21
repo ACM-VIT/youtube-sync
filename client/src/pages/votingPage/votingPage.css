@@ -30,19 +30,9 @@ padding:0.5rem 0rem;
     transform: translate(-10%,50%);
   }
   
-  .AddLink {
-    text-align: left;
-    font-family:"Times New Roman MS",sans-serif;
-    font-size:1rem;
-    color: white;
-     /* border :1px solid yellow; */
-     position:absolute;
-     bottom:5%;
-     transform: translateX(35%);
-     height:10vh;
-     width:25vw;
-     box-sizing: border-box;
-  }
+  
+
+
   
   .dash {
     background-color: white !important;
@@ -167,3 +157,4 @@ padding:0.5rem 0rem;
     transition: transform 7s;
    /*  transition-timing-function: ease-in; */
   }
+  

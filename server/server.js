@@ -69,10 +69,11 @@ io.on("connect", (socket) => {
     callback();
   });
 
-  socket.on("setUrl", (url, callback) => {
+  socket.on("sendUrl", ({ url, room }, callback) => {
     const user = getUser(socket.id);
-    setUrl(url);
-    io.to(user.room).emit("clientUrl", { url });
+    const { error, dbUrl } = setUrl({ url, room });
+    if (error) return callback(error)
+    io.to(user.room).emit("clientUrl", dbUrl);
 
     callback();
   });

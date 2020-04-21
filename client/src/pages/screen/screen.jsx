@@ -70,7 +70,8 @@ const Screen = () => {
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState([]);
   const [admin, setAdmin] = useState(false);
-  const [url, setUrl] = useState(null);
+  const [url, setUrl] = useState('');
+  const [urls, setUrls] = useState([]);
   const [adminDisplay, setAdminDisplay] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
@@ -78,6 +79,7 @@ const Screen = () => {
   const [duration, setDuration] = useState(0);
   const [playing, handlePlay] = useState(false);
   const ENDPOINT = `${baseUrl}/`;
+  const alSubmit = useRef();
 
 
   useEffect(() => {
@@ -123,13 +125,10 @@ const Screen = () => {
         console.log('reached');
       }
     });
-    socket.on('clientUrl', (url) => {
-      console.log('Initial check');
-      console.log('');
-      if (!admin) {
-        console.log('SET URL ACTIVATE');
-        setUrl(url);
-      }
+    socket.on('clientUrl', (dbUrl) => {
+      console.log('urls updated');
+      console.log('SET URL ACTIVATE');
+      setUrls([...urls, dbUrl]);
     });
     return () => {
       socket.emit('disconnect');
@@ -167,6 +166,16 @@ const Screen = () => {
     }
   };
 
+  const sendUrl = (event) => {
+    event.preventDefault();
+    if (url) {
+      socket.emit('sendUrl', { url, room }, () => {
+        setUrl('');
+        alSubmit.current.style.backgroundColor = '#096C37';
+      });
+    }
+  };
+
   const play = () => {
     console.log('onPlay');
     console.log(player);
@@ -189,7 +198,7 @@ const Screen = () => {
 
   return (
     <>
-      <VotingPage room={room} />
+      <VotingPage url={url} setUrl={setUrl} sendUrl={sendUrl} room={room} alSubmit={alSubmit} />
       {/*  <Room
         adminDisplay={adminDisplay}
         setAdminDisplay={setAdminDisplay}
