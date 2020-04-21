@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/control-has-associated-label */
@@ -15,80 +16,11 @@ import baseUrl from '../../baseUrl';
 import './screen.css';
 
 import Chat from '../../components/Chat/Chat';
-import VotingScreen from '../votingPage/votingPage';
+import VotingPage from '../votingPage/votingPage';
 
-
-function toPX(value) {
-  return (
-    (parseFloat(value) / 100)
-    * (/vh/gi.test(value) ? window.innerHeight : window.innerWidth)
-  );
-}
 
 let socket;
 
-
-const AdminPanel = ({ setAdminDisplay, room, setUrl }) => {
-  const submit = useRef();
-  const input = useRef();
-  useEffect(() => {
-    const tl = gsap.timeline();
-    tl.to('.adminPanel', {
-      width: toPX('70vw'),
-      ease: 'ease-in',
-      duration: 1,
-    }, 0);
-    /*  ytSearch('surfing').then((res) => console.log(res)); */
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const tl = gsap.timeline();
-    tl.to('.adminPanel', {
-      width: 0,
-      ease: 'ease-out',
-      duration: 2,
-    }, 0);
-    setUrl(input.current.value);
-    setAdminDisplay(false);
-  };
-  return (
-    <>
-      <div className="blur" />
-      <div className="adminPanel">
-        // title
-        <div className="apTitle">
-          <div className="dash" />
-          <br />
-          <span>
-            ROOM ADMIN
-            <br />
-            PAGE
-          </span>
-          <br />
-          <span className="apRoom">{room}</span>
-        </div>
-        <hr />
-        //form
-        <div>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <label htmlFor="url">YoutubeUrl</label>
-            <br />
-            <input name="url" type="url" ref={input} />
-            <br />
-            <button className="btn-c" type="submit" ref={submit}>
-
-              <svg width="22px" height="17px" viewBox="-1 0 22 17">
-                <path d="M16.9629797,7.00000372 L11.3176817,1.73105898 C10.9139311,1.35422502 10.8921108,0.721436142 11.2689447,0.317685466 C11.6457787,-0.0860652103 12.2785676,-0.107885516 12.6823183,0.268948448 L20.1823183,7.26894845 C20.6058939,7.66428574 20.6058939,8.3357217 20.1823183,8.73105898 L12.6823183,15.731059 C12.2785676,16.1078929 11.6457787,16.0860726 11.2689447,15.682322 C10.8921108,15.2785713 10.9139311,14.6457824 11.3176817,14.2689484 L16.9629797,9.00000372 L1,9.00000372 C0.44771525,9.00000372 -7.10542736e-15,8.55228847 -7.10542736e-15,8.00000372 C-7.10542736e-15,7.44771897 0.44771525,7.00000372 1,7.00000372 L16.9629797,7.00000372 Z" />
-              </svg>
-
-            </button>
-          </form>
-        </div>
-      </div>
-    </>
-  );
-};
 
 const Room = ({
   adminDisplay,
@@ -106,7 +38,7 @@ const Room = ({
   messages,
 }) => (
   <>
-    {adminDisplay && <AdminPanel setAdminDisplay={setAdminDisplay} room={room} setUrl={setUrl} />}
+    {/*  {adminDisplay && <AdminPanel setAdminDisplay={setAdminDisplay} room={room} setUrl={setUrl} />} */}
     <div className="screenWrapper">
       <div className="Movie">
         <ReactPlayer
@@ -256,21 +188,24 @@ const Screen = () => {
 
 
   return (
-    <Room
-      adminDisplay={adminDisplay}
-      setAdminDisplay={setAdminDisplay}
-      name={name}
-      room={room}
-      url={url}
-      setUrl={setUrl}
-      ref={ref}
-      play={play}
-      pause={pause}
-      setMessage={setMessage}
-      sendMessage={sendMessage}
-      message={message}
-      messages={messages}
-    />
+    <>
+      <VotingPage room={room} />
+      {/*  <Room
+        adminDisplay={adminDisplay}
+        setAdminDisplay={setAdminDisplay}
+        name={name}
+        room={room}
+        url={url}
+        setUrl={setUrl}
+        ref={ref}
+        play={play}
+        pause={pause}
+        setMessage={setMessage}
+        sendMessage={sendMessage}
+        message={message}
+        messages={messages}
+      /> */}
+    </>
   );
 };
 

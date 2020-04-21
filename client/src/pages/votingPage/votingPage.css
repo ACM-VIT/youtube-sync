@@ -1,0 +1,169 @@
+.adminPanel {
+    position:fixed;
+    bottom: 0;
+    left: 0;
+    z-index:10000;
+    background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.8)
+    ),
+    url('./greenNatureBG.jpg');
+    background-position: center;
+    background-size: cover;
+    position:fixed;
+   width:100vw;
+    height: 100vh;
+    display: flex;
+padding:0.5rem 0rem;
+  }
+  
+
+.adminPanel div {
+    /* border: 3px solid blue; */
+    width: 30%;
+    box-sizing: border-box;
+  }
+
+.adminPanel hr {
+    height: 350px;
+    transform: translate(-10%,50%);
+  }
+  
+  .AddLink {
+    text-align: left;
+    font-family:"Times New Roman MS",sans-serif;
+    font-size:1rem;
+    color: white;
+     /* border :1px solid yellow; */
+     position:absolute;
+     bottom:5%;
+     transform: translateX(35%);
+     height:10vh;
+     width:25vw;
+     box-sizing: border-box;
+  }
+  
+  .dash {
+    background-color: white !important;
+    width:50px !important;
+    height: 10px;
+  }
+  
+  .apTitle {
+    padding-left:0rem;
+    padding-right:2rem;
+    padding-top: 10rem;
+    font-family: 'Staatliches', cursive;
+    color:rgb(255, 255, 255);
+    font-size:9rem;
+    display:flex;
+    flex-direction:column;
+    white-space: nowrap;
+    line-height: 50px;
+  }
+  .apTitle span:nth-of-type(2) {
+    letter-spacing: 5px;
+    line-height: 115px;
+  }
+  .apRoom {
+    font-family: 'Roboto', sans-serif;
+    color:#DAE9E9;
+    font-size: 2rem;
+  }
+  .btn-c {
+    position: absolute;
+    bottom:-60%;
+    right:0%;
+    width: 56px;
+    height: 56px;
+    background: #000;
+    border: 0;
+    border-radius: 100%;
+    outline: none;
+    box-shadow: -0.5px 1px 30px rgba(114, 114, 114, 0.2);
+    cursor: pointer;
+  }
+  .btn-c:after {
+    position: absolute;
+    opacity: 0;
+    left: 17px;
+    top: 17px;
+    content: '';
+    width: 18px;
+    height: 18px;
+    border: 2px solid #fff;
+    border-right: 2px solid transparent;
+    border-radius: 100%;
+    transform: rotate(45deg);
+  }
+  .btn-c svg {
+    position: relative;
+    top: 2px;
+    opacity: 1;
+  }
+  .btn-c svg path {
+    fill: #fff;
+  }
+  
+  .btn-c.active svg {
+    opacity: 0;
+  }
+  
+  .btn-c.active:after {
+    opacity: 1;
+    animation: r360 0.8s linear infinite;
+  }
+  .btn-c.active svg {
+    opacity: 0;
+  }
+  
+  @-moz-keyframes r360 {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes r360 {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes r360 {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes r360 {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .explosion {
+    width:100vw;
+    height: auto;
+   border-radius: 50%;
+   padding-top: 100%;
+  /*   border: 0.1px solid black; */
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    display:block;
+    background-image : linear-gradient(45deg,#85C03F, #096C37);
+    z-index:500000;
+    transition: transform 7s;
+   /*  transition-timing-function: ease-in; */
+  }

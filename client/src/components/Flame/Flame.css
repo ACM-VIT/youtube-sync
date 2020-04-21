@@ -1,6 +1,6 @@
 #flameCanvas {
     display: block;
-    z-index:30;
+    z-index:0;
     position: fixed;
     top:0;
     left:0;
