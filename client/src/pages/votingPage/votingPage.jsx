@@ -38,7 +38,7 @@ const VotingPage = ({
             SETUP
           </span>
         </div>
-        <hr />
+        {/*  <hr /> */}
         <AddLink
           handleSubmit={handleSubmit}
           url={url}
