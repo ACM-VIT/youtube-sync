@@ -198,7 +198,7 @@ const Screen = () => {
 
   return (
     <>
-      <VotingPage url={url} setUrl={setUrl} sendUrl={sendUrl} room={room} alSubmit={alSubmit} />
+      <VotingPage urls={urls} url={url} setUrl={setUrl} sendUrl={sendUrl} room={room} alSubmit={alSubmit} />
       {/*  <Room
         adminDisplay={adminDisplay}
         setAdminDisplay={setAdminDisplay}

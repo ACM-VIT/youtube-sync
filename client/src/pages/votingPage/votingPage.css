@@ -20,10 +20,16 @@ padding:0.5rem 0rem;
   
 
 .adminPanel div {
-    /* border: 3px solid blue; */
     width: 30%;
     box-sizing: border-box;
+  /*  border: 1px solid blue; */
   }
+
+  .vote {
+    flex-grow: 1; 
+    position: relative;
+  }
+
 
 .adminPanel hr {
     height: 350px;
@@ -61,85 +67,7 @@ padding:0.5rem 0rem;
     color:#DAE9E9;
     font-size: 2rem;
   }
-  .btn-c {
-    position: absolute;
-    bottom:-60%;
-    right:0%;
-    width: 56px;
-    height: 56px;
-    background: #000;
-    border: 0;
-    border-radius: 100%;
-    outline: none;
-    box-shadow: -0.5px 1px 30px rgba(114, 114, 114, 0.2);
-    cursor: pointer;
-  }
-  .btn-c:after {
-    position: absolute;
-    opacity: 0;
-    left: 17px;
-    top: 17px;
-    content: '';
-    width: 18px;
-    height: 18px;
-    border: 2px solid #fff;
-    border-right: 2px solid transparent;
-    border-radius: 100%;
-    transform: rotate(45deg);
-  }
-  .btn-c svg {
-    position: relative;
-    top: 2px;
-    opacity: 1;
-  }
-  .btn-c svg path {
-    fill: #fff;
-  }
   
-  .btn-c.active svg {
-    opacity: 0;
-  }
-  
-  .btn-c.active:after {
-    opacity: 1;
-    animation: r360 0.8s linear infinite;
-  }
-  .btn-c.active svg {
-    opacity: 0;
-  }
-  
-  @-moz-keyframes r360 {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  @-webkit-keyframes r360 {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  @-o-keyframes r360 {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  @keyframes r360 {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
 
   .explosion {
     width:100vw;
