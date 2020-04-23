@@ -4,18 +4,20 @@
     border-radius:50%;
     padding:0.5rem; 
     transition: background-color 1s ;
+    position: relative;
+    top:-15%;
+    left:-15%;
   }
 
   .alInput {
-    transform:translate(-5%,-8%);
+    transform:translate(-25%,-41%);
     width: 250px;
   }
   .AddLink {
-    text-align: left;
     font-family:"Times New Roman MS",sans-serif;
     font-size:1rem;
     color: white;
-     border :1px solid yellow;
+    /*  border :1px solid yellow; */
      position:absolute;
      bottom:5%;
      transform: translate(18%,-20%);

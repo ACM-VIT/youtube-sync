@@ -5,18 +5,28 @@ import gsap from 'gsap';
 import toPX from '../../../toPX';
 import './Toast.css';
 
-function Toast({ toastName, toastUrl }) {
+
+function Toast({ toastMsg }) {
   useEffect(() => {
     const tl = new gsap.timeline();
-    tl.to('.Toast', { width: toPX('10vw'), duration: 1 }, 0);
+    tl.set('.Toast', { width: 0 }, 0);
+    tl.to('.Toast', { width: toPX('28vw'), duration: 1 }, '>');
   });
   return (
     <div className="Toast">
-      <span>
-        {toastName}
-        <br />
-        {toastUrl}
-      </span>
+      <div className="toastIcon" />
+      <div className="toastContent">
+        <span>
+          {toastMsg}
+          <br />
+          <em>
+            Waiting for others
+            <span className="dot" id="one">.</span>
+            <span className="dot" id="two">.</span>
+            <span className="dot" id="three">.</span>
+          </em>
+        </span>
+      </div>
     </div>
   );
 }

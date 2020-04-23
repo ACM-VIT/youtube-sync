@@ -81,6 +81,7 @@ const Screen = () => {
   const [toast, showToast] = useState(false);
   const [toastName, setToastName] = useState('');
   const [toastUrl, setToastUrl] = useState('');
+  const [toastMsg, setToastMsg] = useState('');
   const ENDPOINT = `${baseUrl}/`;
   const alSubmit = useRef();
 
@@ -137,7 +138,8 @@ const Screen = () => {
       console.log('upvote toast activate', name, selUrl);
       showToast(true);
       setToastName(name);
-      setToastUrl(url);
+      setToastUrl(selUrl);
+      setToastMsg(`${name} has selected \n ${selUrl}`);
     });
 
 
@@ -220,7 +222,7 @@ const Screen = () => {
 
   return (
     <>
-      <VotingPage toast={toast} toastName={toastName} toastUrl={toastUrl} upvote={upvote} urls={urls} url={url} setUrl={setUrl} sendUrl={sendUrl} room={room} alSubmit={alSubmit} />
+      <VotingPage toastMsg={toastMsg} toast={toast} toastName={toastName} toastUrl={toastUrl} upvote={upvote} urls={urls} url={url} setUrl={setUrl} sendUrl={sendUrl} room={room} alSubmit={alSubmit} />
       {/*  <Room
         adminDisplay={adminDisplay}
         setAdminDisplay={setAdminDisplay}

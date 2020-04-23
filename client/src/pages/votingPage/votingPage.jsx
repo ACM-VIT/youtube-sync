@@ -11,7 +11,7 @@ import Vote from './Vote/Vote';
 import Toast from './Toast/Toast';
 
 const VotingPage = ({
-  setAdminDisplay, room, url, setUrl, sendUrl, alSubmit, urls, upvote, toast, toastUrl, toastName,
+  setAdminDisplay, room, url, setUrl, sendUrl, alSubmit, urls, upvote, toast, toastMsg,
 }) => {
   const input = useRef();
   const exp1 = useRef();
@@ -27,7 +27,7 @@ const VotingPage = ({
   };
   return (
     <>
-      {toast && <Toast toastName={toastName} toastUrl={toastUrl} />}
+      {toast && <Toast toastMsg={toastMsg} />}
       <div ref={exp1} className="explosion" />
       <div className="adminPanel">
         <div className="apTitle">
