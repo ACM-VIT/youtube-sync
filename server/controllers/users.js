@@ -8,6 +8,14 @@ const updateDuration = (duration) => {
   serverDuration = duration;
 }
 
+const upvote = ({ selUrl, room }) => {
+  if (!selUrl || !room) return { error: "Url and room required" };
+  const dbUrl = urls.find(ele => ele.room === room && ele.url === selUrl);
+  if (!dbUrl) return { error: "No url found" };
+  dbUrl.upvotes = dbUrl.upvotes + 1;
+  return { dbUrl };
+}
+
 const setUrl = ({ url, room }) => {
 
   const existingUrl = urls.find(
@@ -65,4 +73,4 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
-module.exports = { addUser, removeUser, getUser, getUsersInRoom, updateDuration, setUrl };
+module.exports = { addUser, removeUser, getUser, getUsersInRoom, updateDuration, setUrl, upvote };

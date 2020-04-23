@@ -8,9 +8,10 @@ import './votingPage.css';
 
 import AddLink from './AddLink/AddLink';
 import Vote from './Vote/Vote';
+import Toast from './Toast/Toast';
 
 const VotingPage = ({
-  setAdminDisplay, room, url, setUrl, sendUrl, alSubmit, urls,
+  setAdminDisplay, room, url, setUrl, sendUrl, alSubmit, urls, upvote, toast, toastUrl, toastName,
 }) => {
   const input = useRef();
   const exp1 = useRef();
@@ -26,6 +27,7 @@ const VotingPage = ({
   };
   return (
     <>
+      {toast && <Toast toastName={toastName} toastUrl={toastUrl} />}
       <div ref={exp1} className="explosion" />
       <div className="adminPanel">
         // title first div
@@ -48,7 +50,7 @@ const VotingPage = ({
           alSubmit={alSubmit}
         />
         <div className="vote">
-          {urls.length !== 0 ? <Vote urls={urls} /> : null}
+          {urls.length !== 0 ? <Vote urls={urls} upvote={upvote} /> : null}
         </div>
       </div>
       <link

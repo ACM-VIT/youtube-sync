@@ -16,7 +16,8 @@ const {
   getUser,
   getUsersInRoom,
   updateDuration,
-  setUrl
+  setUrl,
+  upvote
 } = require("./controllers/users");
 
 app
@@ -75,6 +76,15 @@ io.on("connect", (socket) => {
     if (error) return callback(error)
     io.to(user.room).emit("clientUrl", dbUrl);
 
+    callback();
+  });
+
+  socket.on("upvote", ({ selUrl, room }, callback) => {
+
+    const { name } = getUser(socket.id);
+    const { error, dbUrl } = upvote({ selUrl, room });
+    if (error) return callback(error)
+    io.to(room).emit("upvoteToast", { name, selUrl });
     callback();
   });
 

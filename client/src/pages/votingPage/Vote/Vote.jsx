@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-redeclare */
 /* eslint-disable block-scoped-var */
@@ -34,12 +36,14 @@ const selectionStyle = {
   left: '2%',
   top: '10%',
   fontFamily: 'Times New Roman MS',
+  cursor: 'pointer',
 };
 
-function Vote({ urls }) {
+function Vote({ urls, upvote }) {
   const [voteNumber, setvoteNumber] = useState(1);
   const result = useRef();
   let container;
+  const [seltext, changeST] = useState('Mark as Selection');
 
   useEffect(() => {
     container = result.current;
@@ -135,7 +139,7 @@ function Vote({ urls }) {
 
   return (
     <>
-      <span style={selectionStyle}>Mark as Selection</span>
+      <span onClick={() => (seltext === 'Mark as Selection' ? upvote(changeST, urls[voteNumber - 1].url) : null)} role="button" style={selectionStyle}>{seltext}</span>
       <div className="result" ref={result} style={resultStyle} />
       <div className="voteControls">
         <button className="btn-c" type="submit" onClick={() => (voteNumber !== 1 ? setvoteNumber((vn) => vn - 1) : null)}>

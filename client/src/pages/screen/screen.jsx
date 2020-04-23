@@ -78,6 +78,9 @@ const Screen = () => {
   const [player, initPlayer] = useState(null);
   const [duration, setDuration] = useState(0);
   const [playing, handlePlay] = useState(false);
+  const [toast, showToast] = useState(false);
+  const [toastName, setToastName] = useState('');
+  const [toastUrl, setToastUrl] = useState('');
   const ENDPOINT = `${baseUrl}/`;
   const alSubmit = useRef();
 
@@ -130,6 +133,14 @@ const Screen = () => {
       console.log('SET URL ACTIVATE');
       setUrls([...urls, dbUrl]);
     });
+    socket.on('upvoteToast', ({ name, url }) => {
+      console.log('upvote toast activate', name, url);
+      showToast(true);
+      setToastName(name);
+      setToastUrl(url);
+    });
+
+
     return () => {
       socket.emit('disconnect');
       socket.off();
@@ -195,10 +206,21 @@ const Screen = () => {
     initPlayer(pl);
   };
 
+  const upvote = (changeST, selUrl) => {
+    changeST('Selection Done');
+    if (!selUrl) return alert('selurl not found');
+    return socket.emit('upvote', { selUrl, room }, (err) => {
+      if (err) {
+        console.log(err);
+        alert(err);
+      }
+    });
+  };
+
 
   return (
     <>
-      <VotingPage urls={urls} url={url} setUrl={setUrl} sendUrl={sendUrl} room={room} alSubmit={alSubmit} />
+      <VotingPage toast={toast} toastName={toastName} toastUrl={toastUrl} upvote={upvote} urls={urls} url={url} setUrl={setUrl} sendUrl={sendUrl} room={room} alSubmit={alSubmit} />
       {/*  <Room
         adminDisplay={adminDisplay}
         setAdminDisplay={setAdminDisplay}
