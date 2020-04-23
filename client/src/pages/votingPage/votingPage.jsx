@@ -30,7 +30,6 @@ const VotingPage = ({
       {toast && <Toast toastName={toastName} toastUrl={toastUrl} />}
       <div ref={exp1} className="explosion" />
       <div className="adminPanel">
-        // title first div
         <div className="apTitle">
           <div className="dash" />
           <span className="apRoom">{room}</span>

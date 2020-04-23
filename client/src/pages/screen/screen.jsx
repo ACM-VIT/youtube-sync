@@ -133,8 +133,8 @@ const Screen = () => {
       console.log('SET URL ACTIVATE');
       setUrls([...urls, dbUrl]);
     });
-    socket.on('upvoteToast', ({ name, url }) => {
-      console.log('upvote toast activate', name, url);
+    socket.on('upvoteToast', ({ name, selUrl }) => {
+      console.log('upvote toast activate', name, selUrl);
       showToast(true);
       setToastName(name);
       setToastUrl(url);
