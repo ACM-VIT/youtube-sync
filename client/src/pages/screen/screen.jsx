@@ -38,7 +38,6 @@ const Room = ({
   messages,
 }) => (
   <>
-    {/*  {adminDisplay && <AdminPanel setAdminDisplay={setAdminDisplay} room={room} setUrl={setUrl} />} */}
     <div className="screenWrapper">
       <div className="Movie">
         <ReactPlayer
@@ -82,6 +81,10 @@ const Screen = () => {
   const [toastName, setToastName] = useState('');
   const [toastUrl, setToastUrl] = useState('');
   const [toastMsg, setToastMsg] = useState('');
+  const [toastHits, settoastHits] = useState(0);
+  const [nou, setnou] = useState(0);
+  const [roomDisplay, setRD] = useState(false);
+  const [urlChoice, setUC] = useState('');
   const ENDPOINT = `${baseUrl}/`;
   const alSubmit = useRef();
 
@@ -118,6 +121,7 @@ const Screen = () => {
     });
     socket.on('roomData', ({ users }) => {
       setUsers({ users });
+      setnou(users.length);
     });
     socket.on('playerHandler', ({ playing, duration }) => {
       console.log('DURATION ACTIVATE', playing, duration);
@@ -170,6 +174,16 @@ const Screen = () => {
     });
   }, [duration, playing]);
 
+  useEffect(() => {
+    if (urls.length === 0) { return; }
+    const upvotes = [];
+    urls.forEach((ele) => upvotes.push(ele.upvotes));
+    const max = Math.max.apply(null, upvotes);
+    const index = upvotes.findIndex((ele) => ele === max);
+    console.log(upvotes, max, index, urls);
+    setUC(urls[index].url);
+  }, [roomDisplay]);
+
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -211,6 +225,7 @@ const Screen = () => {
   const upvote = (changeST, selUrl) => {
     changeST('Selection Done');
     if (!selUrl) return alert('selurl not found');
+    settoastHits((hit) => hit + 1);
     return socket.emit('upvote', { selUrl, room }, (err) => {
       if (err) {
         console.log(err);
@@ -222,22 +237,25 @@ const Screen = () => {
 
   return (
     <>
-      <VotingPage toastMsg={toastMsg} toast={toast} toastName={toastName} toastUrl={toastUrl} upvote={upvote} urls={urls} url={url} setUrl={setUrl} sendUrl={sendUrl} room={room} alSubmit={alSubmit} />
-      {/*  <Room
-        adminDisplay={adminDisplay}
-        setAdminDisplay={setAdminDisplay}
-        name={name}
-        room={room}
-        url={url}
-        setUrl={setUrl}
-        ref={ref}
-        play={play}
-        pause={pause}
-        setMessage={setMessage}
-        sendMessage={sendMessage}
-        message={message}
-        messages={messages}
-      /> */}
+      { !roomDisplay
+        ? <VotingPage setRD={setRD} admin={admin} nou={nou} toastHits={toastHits} toastMsg={toastMsg} toast={toast} toastName={toastName} toastUrl={toastUrl} upvote={upvote} urls={urls} url={url} setUrl={setUrl} sendUrl={sendUrl} room={room} alSubmit={alSubmit} />
+        : (
+          <Room
+            adminDisplay={adminDisplay}
+            setAdminDisplay={setAdminDisplay}
+            name={name}
+            room={room}
+            url={urlChoice}
+            setUrl={setUrl}
+            ref={ref}
+            play={play}
+            pause={pause}
+            setMessage={setMessage}
+            sendMessage={sendMessage}
+            message={message}
+            messages={messages}
+          />
+        ) }
     </>
   );
 };

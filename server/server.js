@@ -74,7 +74,7 @@ io.on("connect", (socket) => {
     const user = getUser(socket.id);
     const { error, dbUrl } = setUrl({ url, room });
     if (error) return callback(error)
-    io.to(user.room).emit("clientUrl", dbUrl);
+    io.to(room).emit("clientUrl", dbUrl);
 
     callback();
   });
