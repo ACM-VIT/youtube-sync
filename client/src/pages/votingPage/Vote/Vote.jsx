@@ -134,7 +134,10 @@ function Vote({ urls, upvote }) {
     } */
   });
 
-  useEffect(() => appendThumb(urls[voteNumber - 1].url), [voteNumber]);
+  useEffect(() => {
+    if (!urls[voteNumber - 1]) return;
+    appendThumb(urls[voteNumber - 1].url);
+  }, [voteNumber]);
 
 
   return (

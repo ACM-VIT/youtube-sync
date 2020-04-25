@@ -16,6 +16,10 @@ const upvote = ({ selUrl, room }) => {
   return { dbUrl };
 }
 
+const getUrlsLength = () => urls.length;
+
+const getUrls = () => urls;
+
 const setUrl = ({ url, room }) => {
 
   const existingUrl = urls.find(
@@ -73,4 +77,4 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
-module.exports = { addUser, removeUser, getUser, getUsersInRoom, updateDuration, setUrl, upvote };
+module.exports = { getUrls, getUrlsLength, addUser, removeUser, getUser, getUsersInRoom, updateDuration, setUrl, upvote };

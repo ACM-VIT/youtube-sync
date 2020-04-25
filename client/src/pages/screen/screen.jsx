@@ -83,7 +83,7 @@ const Screen = () => {
   const [toastMsg, setToastMsg] = useState('');
   const [toastHits, settoastHits] = useState(0);
   const [nou, setnou] = useState(0);
-  const [roomDisplay, setRD] = useState(false);
+  const [roomDisplay, changeRD] = useState(false);
   const [urlChoice, setUC] = useState('');
   const ENDPOINT = `${baseUrl}/`;
   const alSubmit = useRef();
@@ -115,6 +115,10 @@ const Screen = () => {
       setAdmin(isAdmin);
       setAdminDisplay(isAdmin);
     });
+    socket.on('initUrls', (urls) => {
+      setUrls(urls);
+      console.log('INIT URLS ACTIVATE', urls);
+    });
     socket.on('message', (message) => {
       console.log('SET MESSAGES ACTIVATE', message);
       setMessages([...messages, message]);
@@ -145,8 +149,14 @@ const Screen = () => {
       setToastUrl(selUrl);
       setToastMsg(`${name} has selected \n ${selUrl}`);
     });
-
-
+    socket.on('roomDisplay', (roomDisplay) => {
+      console.log('ROOM DISPLAY ACTIVATE', roomDisplay);
+      changeRD(roomDisplay);
+    });
+    socket.on('toastHandler', (toastHits) => {
+      console.log('TOAST ACTIVATE ', toastHits);
+      settoastHits(toastHits);
+    });
     return () => {
       socket.emit('disconnect');
       socket.off();
@@ -164,6 +174,16 @@ const Screen = () => {
       });
     }
   }, [url, admin]);
+
+  useEffect(() => {
+    if (toastHits === 0) return;
+    socket.emit('toastHit', toastHits, (err) => {
+      if (err) {
+        console.log(err);
+        alert(err);
+      }
+    });
+  }, [toastHits]);
 
   useEffect(() => {
     socket.emit('handlePlayPause', { playing, duration }, (err) => {
@@ -227,6 +247,15 @@ const Screen = () => {
     if (!selUrl) return alert('selurl not found');
     settoastHits((hit) => hit + 1);
     return socket.emit('upvote', { selUrl, room }, (err) => {
+      if (err) {
+        console.log(err);
+        alert(err);
+      }
+    });
+  };
+
+  const setRD = () => {
+    socket.emit('changeRD', true, (err) => {
       if (err) {
         console.log(err);
         alert(err);
