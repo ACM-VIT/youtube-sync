@@ -78,4 +78,19 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
-module.exports = { getUrls, getUrlsLength, addUser, removeUser, getUser, getUsersInRoom, updateDuration, setUrl, upvote };
+
+
+const setNewRoomStatus = (rs) => {
+
+  const existing = roomStatus.some(ele => ele.room === rs.room);
+  if (existing) {
+    roomStatus = roomStatus.filter(ele =>
+      (ele.room !== existing.room));
+  };
+  roomStatus.push(rs);
+  console.log("rs: ", roomStatus);
+};
+
+const getRoomStatus = (room) => roomStatus.find((ele) => ele.room === room);
+
+module.exports = { getRoomStatus, setNewRoomStatus, getUrls, getUrlsLength, addUser, removeUser, getUser, getUsersInRoom, updateDuration, setUrl, upvote };

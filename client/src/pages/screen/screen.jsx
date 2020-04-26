@@ -123,9 +123,12 @@ const Screen = () => {
       console.log('SET MESSAGES ACTIVATE', message);
       setMessages([...messages, message]);
     });
-    socket.on('roomData', ({ users }) => {
+    socket.on('roomData', ({ users, roomStatus, urls }) => {
+      console.log('ROOM DATA ', roomStatus, urls);
       setUsers({ users });
       setnou(users.length);
+      setUrls(urls);
+      if (roomStatus !== roomDisplay) { changeRD(roomStatus); }
     });
     socket.on('playerHandler', ({ playing, duration }) => {
       console.log('DURATION ACTIVATE', playing, duration);
@@ -201,13 +204,13 @@ const Screen = () => {
     const max = Math.max.apply(null, upvotes);
     const index = upvotes.findIndex((ele) => ele === max);
     console.log(upvotes, max, index, urls);
-    setUC(urls[index].url);
-    socket.emit('changeRD', { roomDisplay, urlChoice }, (err) => {
+    socket.emit('changeRD', { roomDisplay, urlChoice: urls[index].url }, (err) => {
       if (err) {
         console.log(err);
         alert(err);
       }
     });
+    setUC(urls[index].url);
   }, [roomDisplay]);
 
 

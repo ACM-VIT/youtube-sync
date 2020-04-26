@@ -4,6 +4,9 @@ const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
 const cors = require("cors");
+const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 const server = http.createServer(app);
@@ -17,13 +20,24 @@ const {
   getUsersInRoom,
   updateDuration,
   setUrl,
-  upvote
+  upvote,
+  setNewRoomStatus,
+  getRoomStatus,
+  getUrls
 } = require("./controllers/users");
 
 app
   .use(cors())
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: "st[*~.3mWSy]hpN*w;TFJ;hM2(z'<e",
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  cookie: { maxAge: 12 * 60 * 60 * 100 }
+}));
 
 io.on("connect", (socket) => {
   socket.on("join", ({ name, room }, callback) => {
@@ -40,10 +54,15 @@ io.on("connect", (socket) => {
       .to(user.room)
       .emit("message", { user: "admin", text: `${user.name} has joined!` });
 
+
+
     io.to(user.room).emit("roomData", {
       room: user.room,
       users: getUsersInRoom(user.room),
+      roomStatus: getRoomStatus(user.room),
+      urls: getUrls(),
     });
+
 
     io.to(user.room).emit("adminCheck", { isAdmin: user.admin });
 
@@ -88,12 +107,13 @@ io.on("connect", (socket) => {
     callback();
   });
 
-  socket.on("changeRD", ({ roomDisplay, url }, callback) => {
+  socket.on("changeRD", ({ roomDisplay, urlChoice }, callback) => {
     console.log('ROOM Display', roomDisplay);
     const { name, room } = getUser(socket.id);
+    setNewRoomStatus({ room, urlChoice, playing: roomDisplay });
     socket.broadcast
       .to(room)
-      .emit('roomDisplay', roomDisplay);
+      .emit('roomDisplay', { roomDisplay, urlChoice });
     callback();
   })
 
