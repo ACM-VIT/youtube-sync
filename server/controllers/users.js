@@ -69,6 +69,7 @@ const removeUser = (id) => {
         console.log("successFully removed room")
       );
       urls = urls.filter(ele => ele.room != u.room);
+      roomStatus = roomStatus.filter(ele => ele.room != u.room);
     }
     return users.splice(index, 1)[0];
   }
@@ -82,7 +83,7 @@ const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
 const setNewRoomStatus = (rs) => {
 
-  const existing = roomStatus.some(ele => ele.room === rs.room);
+  const existing = roomStatus.find((ele) => ele.room === rs.room);
   if (existing) {
     roomStatus = roomStatus.filter(ele =>
       (ele.room !== existing.room));
