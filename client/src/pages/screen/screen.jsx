@@ -255,7 +255,9 @@ const Screen = () => {
   };
 
   const setRD = () => {
-    socket.emit('changeRD', true, (err) => {
+    console.log('CLICKED TOAST');
+    changeRD((v) => !v);
+    socket.emit('changeRD', roomDisplay, (err) => {
       if (err) {
         console.log(err);
         alert(err);

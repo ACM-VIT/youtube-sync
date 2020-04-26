@@ -2,6 +2,7 @@ const Room = require("../models/room");
 
 const users = [];
 let urls = [];
+let roomStatus = [];
 let serverDuration = 0;
 
 const updateDuration = (duration) => {

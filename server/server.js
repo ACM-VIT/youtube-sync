@@ -88,6 +88,11 @@ io.on("connect", (socket) => {
     callback();
   });
 
+  socket.on("changeRD", (roomDisplay, callback) => {
+    console.log('ROOM Display', roomDisplay);
+    callback();
+  })
+
 
 
   socket.on("disconnect", () => {
