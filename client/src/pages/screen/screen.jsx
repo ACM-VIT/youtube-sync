@@ -202,6 +202,12 @@ const Screen = () => {
     const index = upvotes.findIndex((ele) => ele === max);
     console.log(upvotes, max, index, urls);
     setUC(urls[index].url);
+    socket.emit('changeRD', { roomDisplay, urlChoice }, (err) => {
+      if (err) {
+        console.log(err);
+        alert(err);
+      }
+    });
   }, [roomDisplay]);
 
 
@@ -257,12 +263,6 @@ const Screen = () => {
   const setRD = () => {
     console.log('CLICKED TOAST');
     changeRD((v) => !v);
-    socket.emit('changeRD', roomDisplay, (err) => {
-      if (err) {
-        console.log(err);
-        alert(err);
-      }
-    });
   };
 
 

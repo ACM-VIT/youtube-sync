@@ -88,8 +88,12 @@ io.on("connect", (socket) => {
     callback();
   });
 
-  socket.on("changeRD", (roomDisplay, callback) => {
+  socket.on("changeRD", ({ roomDisplay, url }, callback) => {
     console.log('ROOM Display', roomDisplay);
+    const { name, room } = getUser(socket.id);
+    socket.broadcast
+      .to(room)
+      .emit('roomDisplay', roomDisplay);
     callback();
   })
 
