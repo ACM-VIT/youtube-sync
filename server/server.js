@@ -27,9 +27,9 @@ const {
 } = require("./controllers/users");
 
 app
-  .use(cors({ origin: '*' }))
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
+  .use(cors({ origin: '*' }))
 
 app.use(session({
   secret: "st[*~.3mWSy]hpN*w;TFJ;hM2(z'<e",
