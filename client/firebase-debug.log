@@ -1,0 +1,26 @@
+[debug] [2020-05-28T07:28:26.634Z] ----------------------------------------------------------------------
+[debug] [2020-05-28T07:28:26.637Z] Command:       /usr/bin/node /usr/bin/firebase serve
+[debug] [2020-05-28T07:28:26.638Z] CLI Version:   8.1.0
+[debug] [2020-05-28T07:28:26.638Z] Platform:      linux
+[debug] [2020-05-28T07:28:26.638Z] Node Version:  v14.2.0
+[debug] [2020-05-28T07:28:26.639Z] Time:          Thu May 28 2020 12:58:26 GMT+0530 (India Standard Time)
+[debug] [2020-05-28T07:28:26.639Z] ----------------------------------------------------------------------
+[debug] [2020-05-28T07:28:26.639Z] 
+[debug] [2020-05-28T07:28:26.650Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-05-28T07:28:26.651Z] > authorizing via signed-in user
+[debug] [2020-05-28T07:28:26.651Z] [iam] checking project ecell-983c8 for permissions ["firebase.projects.get"]
+[debug] [2020-05-28T07:28:26.655Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/ecell-983c8:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-05-28T07:28:38.097Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 28 May 2020 07:28:37 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1207","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-28T07:28:38.100Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/ecell-983c8  
+ 
+[debug] [2020-05-28T07:28:43.586Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 28 May 2020 07:28:43 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Serving from '/home/gokulkurup/root/youtubeSync/client'...
+[info] 
+[debug] [2020-05-28T07:28:43.594Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/ecell-983c8/webApps/-/config  
+ 
+[debug] [2020-05-28T07:28:45.748Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 28 May 2020 07:28:45 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] ⚠  hosting: Port 5000 is not available. Trying another port...
+[info] i  hosting: Serving hosting files from: build
+[info] ✔  hosting: Local server: http://localhost:5005
