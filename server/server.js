@@ -27,7 +27,7 @@ const {
 } = require("./controllers/users");
 
 app
-  .use(cors())
+  .use(cors({ origin: '*' }))
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
 
