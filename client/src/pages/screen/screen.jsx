@@ -8,19 +8,17 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
-import React, { useEffect, useState, useRef } from 'react';
-import io from 'socket.io-client';
-import gsap from 'gsap';
-import ReactPlayer from 'react-player';
-import baseUrl from '../../baseUrl';
-import './screen.css';
+import React, { useEffect, useState, useRef } from "react";
+import io from "socket.io-client";
+import gsap from "gsap";
+import ReactPlayer from "react-player";
+import baseUrl from "../../baseUrl";
+import "./screen.css";
 
-import Chat from '../../components/Chat/Chat';
-import VotingPage from '../votingPage/votingPage';
-
+import Chat from "../../components/Chat/Chat";
+import VotingPage from "../votingPage/votingPage";
 
 let socket;
-
 
 const Room = ({
   adminDisplay,
@@ -63,35 +61,33 @@ const Room = ({
   </>
 );
 
-
 const Screen = () => {
-  const [name, setName] = useState('');
-  const [room, setRoom] = useState('');
+  const [name, setName] = useState("");
+  const [room, setRoom] = useState("");
   const [users, setUsers] = useState([]);
   const [admin, setAdmin] = useState(false);
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
   const [urls, setUrls] = useState([]);
   const [adminDisplay, setAdminDisplay] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [player, initPlayer] = useState(null);
   const [duration, setDuration] = useState(0);
   const [playing, handlePlay] = useState(false);
   const [toast, showToast] = useState(false);
-  const [toastName, setToastName] = useState('');
-  const [toastUrl, setToastUrl] = useState('');
-  const [toastMsg, setToastMsg] = useState('');
+  const [toastName, setToastName] = useState("");
+  const [toastUrl, setToastUrl] = useState("");
+  const [toastMsg, setToastMsg] = useState("");
   const [toastHits, settoastHits] = useState(0);
   const [nou, setnou] = useState(0);
   const [roomDisplay, changeRD] = useState(false);
-  const [urlChoice, setUC] = useState('');
+  const [urlChoice, setUC] = useState("");
   const ENDPOINT = `${baseUrl}/`;
   const alSubmit = useRef();
 
-
   useEffect(() => {
-    const userObj = JSON.parse(sessionStorage.getItem('userYS'));
-    const roomObj = JSON.parse(sessionStorage.getItem('room'));
+    const userObj = JSON.parse(sessionStorage.getItem("userYS"));
+    const roomObj = JSON.parse(sessionStorage.getItem("room"));
 
     setName(userObj.name);
     setRoom(roomObj.name);
@@ -101,7 +97,7 @@ const Screen = () => {
     socket = io(ENDPOINT);
     if (!name || !room) return;
     console.log(name, room);
-    socket.emit('join', { name, room }, (err) => {
+    socket.emit("join", { name, room }, (err) => {
       if (err) {
         console.log(err);
         alert(err);
@@ -110,66 +106,68 @@ const Screen = () => {
   }, [name, room, ENDPOINT]);
 
   useEffect(() => {
-    socket.on('adminCheck', ({ isAdmin }) => {
-      console.log('SET ADMIN ACTIVATE', isAdmin);
+    socket.on("adminCheck", ({ isAdmin }) => {
+      console.log("SET ADMIN ACTIVATE", isAdmin);
       setAdmin(isAdmin);
       setAdminDisplay(isAdmin);
     });
-    socket.on('initUrls', (urls) => {
+    socket.on("initUrls", (urls) => {
       setUrls(urls);
-      console.log('INIT URLS ACTIVATE', urls);
+      console.log("INIT URLS ACTIVATE", urls);
     });
-    socket.on('message', (message) => {
-      console.log('SET MESSAGES ACTIVATE', message);
+    socket.on("message", (message) => {
+      console.log("SET MESSAGES ACTIVATE", message);
       setMessages([...messages, message]);
     });
-    socket.on('roomData', ({ users, roomStatus, urls }) => {
-      console.log('ROOM DATA ', roomStatus, urls);
+    socket.on("roomData", ({ users, roomStatus, urls }) => {
+      console.log("ROOM DATA ", roomStatus, urls);
       setUsers({ users });
       setnou(users.length);
       setUrls(urls);
-      if (roomStatus !== roomDisplay) { changeRD(roomStatus); }
+      if (roomStatus !== roomDisplay) {
+        changeRD(roomStatus);
+      }
     });
-    socket.on('playerHandler', ({ playing, duration }) => {
-      console.log('DURATION ACTIVATE', playing, duration);
+    socket.on("playerHandler", ({ playing, duration }) => {
+      console.log("DURATION ACTIVATE", playing, duration);
       if (!admin) {
         handlePlay(playing);
         setDuration(duration);
-        player.seekTo(duration, 'seconds');
+        player.seekTo(duration, "seconds");
       } else {
-        console.log('reached');
+        console.log("reached");
       }
     });
-    socket.on('clientUrl', (dbUrl) => {
-      console.log('urls updated');
-      console.log('SET URL ACTIVATE');
+    socket.on("clientUrl", (dbUrl) => {
+      console.log("urls updated");
+      console.log("SET URL ACTIVATE");
       setUrls([...urls, dbUrl]);
     });
-    socket.on('upvoteToast', ({ name, selUrl }) => {
-      console.log('upvote toast activate', name, selUrl);
+    socket.on("upvoteToast", ({ name, selUrl }) => {
+      console.log("upvote toast activate", name, selUrl);
       showToast(true);
       setToastName(name);
       setToastUrl(selUrl);
       setToastMsg(`${name} has selected \n ${selUrl}`);
     });
-    socket.on('roomDisplay', (roomDisplay) => {
-      console.log('ROOM DISPLAY ACTIVATE', roomDisplay);
+    socket.on("roomDisplay", (roomDisplay) => {
+      console.log("ROOM DISPLAY ACTIVATE", roomDisplay);
       changeRD(roomDisplay);
     });
-    socket.on('toastHandler', (toastHits) => {
-      console.log('TOAST ACTIVATE ', toastHits);
+    socket.on("toastHandler", (toastHits) => {
+      console.log("TOAST ACTIVATE ", toastHits);
       settoastHits(toastHits);
     });
     return () => {
-      socket.emit('disconnect');
+      socket.emit("disconnect");
       socket.off();
     };
   });
 
   useEffect(() => {
-    console.log('SETURL', url, admin);
+    console.log("SETURL", url, admin);
     if (admin) {
-      socket.emit('setUrl', url, (err) => {
+      socket.emit("setUrl", url, (err) => {
         if (err) {
           console.log(err);
           alert(err);
@@ -180,7 +178,7 @@ const Screen = () => {
 
   useEffect(() => {
     if (toastHits === 0) return;
-    socket.emit('toastHit', toastHits, (err) => {
+    socket.emit("toastHit", toastHits, (err) => {
       if (err) {
         console.log(err);
         alert(err);
@@ -189,7 +187,7 @@ const Screen = () => {
   }, [toastHits]);
 
   useEffect(() => {
-    socket.emit('handlePlayPause', { playing, duration }, (err) => {
+    socket.emit("handlePlayPause", { playing, duration }, (err) => {
       if (err) {
         console.log(err);
         alert(err);
@@ -198,50 +196,55 @@ const Screen = () => {
   }, [duration, playing]);
 
   useEffect(() => {
-    if (urls.length === 0) { return; }
+    if (urls.length === 0) {
+      return;
+    }
     const upvotes = [];
     urls.forEach((ele) => upvotes.push(ele.upvotes));
     const max = Math.max.apply(null, upvotes);
     const index = upvotes.findIndex((ele) => ele === max);
     console.log(upvotes, max, index, urls);
-    socket.emit('changeRD', { roomDisplay, urlChoice: urls[index].url }, (err) => {
-      if (err) {
-        console.log(err);
-        alert(err);
+    socket.emit(
+      "changeRD",
+      { roomDisplay, urlChoice: urls[index].url },
+      (err) => {
+        if (err) {
+          console.log(err);
+          alert(err);
+        }
       }
-    });
+    );
     setUC(urls[index].url);
   }, [roomDisplay]);
-
 
   const sendMessage = (event) => {
     event.preventDefault();
 
     if (message) {
-      socket.emit('sendMessage', message, () => setMessage(''));
+      socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
 
   const sendUrl = (event) => {
     event.preventDefault();
     if (url) {
-      socket.emit('sendUrl', { url, room }, () => {
-        setUrl('');
-        alSubmit.current.style.backgroundColor = '#096C37';
+      socket.emit("sendUrl", { url, room }, () => {
+        setUrl("");
+        alSubmit.current.style.backgroundColor = "#096C37";
       });
     }
   };
 
   const play = () => {
-    console.log('onPlay');
+    console.log("onPlay");
     console.log(player);
-    const timestamp = player.getCurrentTime();
-    setDuration(timestamp);
-    handlePlay(true);
+    // const timestamp = player.getCurrentTime();
+    // setDuration(timestamp);
+    // handlePlay(true);
   };
 
   const pause = () => {
-    console.log('onPause');
+    console.log("onPause");
     console.log(player);
     const timestamp = player.getCurrentTime();
     setDuration(timestamp.toString());
@@ -252,10 +255,10 @@ const Screen = () => {
   };
 
   const upvote = (changeST, selUrl) => {
-    changeST('Selection Done');
-    if (!selUrl) return alert('selurl not found');
+    changeST("Selection Done");
+    if (!selUrl) return alert("selurl not found");
     settoastHits((hit) => hit + 1);
-    return socket.emit('upvote', { selUrl, room }, (err) => {
+    return socket.emit("upvote", { selUrl, room }, (err) => {
       if (err) {
         console.log(err);
         alert(err);
@@ -264,32 +267,47 @@ const Screen = () => {
   };
 
   const setRD = () => {
-    console.log('CLICKED TOAST');
+    console.log("CLICKED TOAST");
     changeRD((v) => !v);
   };
 
-
   return (
     <>
-      { !roomDisplay
-        ? <VotingPage setRD={setRD} admin={admin} nou={nou} toastHits={toastHits} toastMsg={toastMsg} toast={toast} toastName={toastName} toastUrl={toastUrl} upvote={upvote} urls={urls} url={url} setUrl={setUrl} sendUrl={sendUrl} room={room} alSubmit={alSubmit} />
-        : (
-          <Room
-            adminDisplay={adminDisplay}
-            setAdminDisplay={setAdminDisplay}
-            name={name}
-            room={room}
-            url={urlChoice}
-            setUrl={setUrl}
-            ref={ref}
-            play={play}
-            pause={pause}
-            setMessage={setMessage}
-            sendMessage={sendMessage}
-            message={message}
-            messages={messages}
-          />
-        ) }
+      {!roomDisplay ? (
+        <VotingPage
+          setRD={setRD}
+          admin={admin}
+          nou={nou}
+          toastHits={toastHits}
+          toastMsg={toastMsg}
+          toast={toast}
+          toastName={toastName}
+          toastUrl={toastUrl}
+          upvote={upvote}
+          urls={urls}
+          url={url}
+          setUrl={setUrl}
+          sendUrl={sendUrl}
+          room={room}
+          alSubmit={alSubmit}
+        />
+      ) : (
+        <Room
+          adminDisplay={adminDisplay}
+          setAdminDisplay={setAdminDisplay}
+          name={name}
+          room={room}
+          url={urlChoice}
+          setUrl={setUrl}
+          ref={ref}
+          play={play}
+          pause={pause}
+          setMessage={setMessage}
+          sendMessage={sendMessage}
+          message={message}
+          messages={messages}
+        />
+      )}
     </>
   );
 };
