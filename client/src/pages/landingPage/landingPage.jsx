@@ -1,64 +1,69 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
-import React, { useState, useEffect } from 'react';
-import { GoogleLogin } from 'react-google-login';
-import baseUrl from '../../baseUrl';
-import Loader from './loader';
+import React, { useState, useEffect } from "react";
+import { GoogleLogin } from "react-google-login";
+import baseUrl from "../../baseUrl";
+import Loader from "./loader";
 
-import './landingPage.css';
+import "./landingPage.css";
 
-
-const responseGoogle = (response) => new Promise((resolve, reject) => {
-  try {
-    sessionStorage.setItem('userYS', JSON.stringify(response.profileObj));
-    sessionStorage.setItem('authYS', JSON.stringify(response.tc));
-    console.log(response);
-    resolve();
-  } catch (err) {
-    reject(err);
-  }
-});
+const responseGoogle = (response) =>
+  new Promise((resolve, reject) => {
+    try {
+      sessionStorage.setItem("userYS", JSON.stringify(response.profileObj));
+      sessionStorage.setItem("authYS", JSON.stringify(response.tc));
+      console.log(response);
+      resolve();
+    } catch (err) {
+      reject(err);
+    }
+  });
 
 // eslint-disable-next-line no-async-promise-executor
-const userDB = () => new Promise(async (resolve, reject) => {
-  const userObj = JSON.parse(sessionStorage.getItem('userYS'));
-  if (!userObj) reject();
-  const user = {
-    name: userObj.name,
-  };
-  console.log(JSON.stringify(user));
-  try {
-    const response = await fetch(`${baseUrl}/api/login`, {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: { 'Content-type': 'application/json' },
-    });
-    const data = await response.json();
-    await sessionStorage.setItem('user', JSON.stringify(data));
-    resolve(data);
-  } catch (err) {
-    reject(err);
-  }
-});
+
+const userDB = () =>
+  new Promise(async (resolve, reject) => {
+    const userObj = JSON.parse(sessionStorage.getItem("userYS"));
+    if (!userObj) reject();
+    const user = {
+      name: userObj.name,
+    };
+    console.log(JSON.stringify(user));
+    try {
+      const response = await fetch(`${baseUrl}/login/basic`, {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: { "Content-type": "application/json" },
+      });
+      const fetchResponse = await response.json();
+      await sessionStorage.setItem(
+        "user",
+        JSON.stringify(fetchResponse.data.user)
+      );
+      resolve(fetchResponse);
+    } catch (err) {
+      reject(err);
+    }
+  });
 
 const login = async (response) => {
   console.log(response);
   const tasks = [responseGoogle(response), userDB()];
   Promise.all(tasks)
-    .then((/* console.log('DEBUG') */window.location.href = '/dashboard'))
+    .then(console.log("DEBUG") /* (window.location.href = "/dashboard") */)
     .catch((err) => console.error(err));
 };
 
 const googleFail = (response) => {
   console.error(response);
-  alert('FAIL');
+  alert("FAIL");
 };
 
 function LandingPage() {
   const [loading, changeLoading] = useState(true);
 
   useEffect(() => {
-    console.log('useEffect triggered');
+    console.log("useEffect triggered");
     setTimeout(() => {
       changeLoading(false);
       console.log(loading);
@@ -69,11 +74,7 @@ function LandingPage() {
     <div className="landingWrapper">
       <div className="title">
         <h1>
-          <span>Youtube</span>
-          {' '}
-          <br />
-          {' '}
-          SYNC
+          <span>Youtube</span> <br /> SYNC
         </h1>
       </div>
       {loading ? (
