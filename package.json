@@ -13,6 +13,7 @@
     "gsap": "^3.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.24",
+    "npm": "^6.14.6",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -35,7 +36,7 @@
   "scripts": {
     "client": "npm run start --prefix client",
     "server": "npm run server --prefix server",
-    "start": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
+    "start": "concurrently --k -p \"[{name}]\" -n \"React,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run client\" \"npm run server\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
