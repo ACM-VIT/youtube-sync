@@ -1,6 +1,5 @@
-import app from '../app';
-import { SocketServer } from './SoketServer';
-
+import { app } from "../app";
+import { SocketServer } from "./SoketServer";
 
 const ss = new SocketServer(app);
 

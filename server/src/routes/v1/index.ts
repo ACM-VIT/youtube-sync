@@ -1,7 +1,6 @@
 import express, { NextFunction } from "express";
 import basic from "./initTest/helloworld";
 import login from "./access/login";
-import { NotFoundResponse } from "../../core/ApiResponse";
 import createRoom from "./room/createRoom";
 
 const router = express.Router();
