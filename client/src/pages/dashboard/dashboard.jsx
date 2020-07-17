@@ -8,46 +8,46 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
-import gsap from 'gsap';
-import './dashboard.css';
-import { GoogleLogout } from 'react-google-login';
-import baseUrl from '../../baseUrl';
-import DashEnder from '../../components/DashEnder/DashEnder';
+import React, { useState, useEffect } from "react";
+import gsap from "gsap";
+import "./dashboard.css";
+import { GoogleLogout } from "react-google-login";
+import baseUrl from "../../baseUrl";
+import DashEnder from "../../components/DashEnder/DashEnder";
 
 function toPX(value) {
   return (
-    (parseFloat(value) / 100)
-    * (/vh/gi.test(value) ? window.innerHeight : window.innerWidth)
+    (parseFloat(value) / 100) *
+    (/vh/gi.test(value) ? window.innerHeight : window.innerWidth)
   );
 }
 
 function slideIn() {
-  gsap.to('.whiteScreen', {
-    width: toPX('75vw'),
-    ease: 'ease-in',
+  gsap.to(".whiteScreen", {
+    width: toPX("75vw"),
+    ease: "ease-in",
     duration: 0.5,
   });
 }
 
 function slideOut() {
-  gsap.to('.whiteScreen', {
+  gsap.to(".whiteScreen", {
     width: 0,
-    ease: 'ease-in',
+    ease: "ease-in",
     duration: 0.5,
   });
-  const whiteScreen = document.querySelector('.whiteScreen');
-  whiteScreen.style = 'padding:0';
+  const whiteScreen = document.querySelector(".whiteScreen");
+  whiteScreen.style = "padding:0";
 }
 
 const hrVeticalStyle = {
   /* transform: "rotate(90deg)", */
-  width: '1%',
+  width: "1%",
 };
 
 const Profile = ({ changeBlur, showProfile }) => {
   const logout = () => {
-    window.location.href = '/';
+    window.location.href = "/";
   };
   return (
     <>
@@ -55,7 +55,7 @@ const Profile = ({ changeBlur, showProfile }) => {
         className="closeBtn"
         onClick={() => {
           slideOut();
-          changeBlur('none');
+          changeBlur("none");
           showProfile(false);
         }}
         src="https://img.icons8.com/ios/50/000000/close-window.png"
@@ -63,28 +63,26 @@ const Profile = ({ changeBlur, showProfile }) => {
       />
       <img
         className="avatar"
-        src={JSON.parse(sessionStorage.getItem('userYS')).imageUrl}
+        src={JSON.parse(sessionStorage.getItem("userYS")).imageUrl}
         alt=""
       />
       <br />
-      <hr style={{ width: '80%', alignSelf: 'center' }} />
+      <hr style={{ width: "80%", alignSelf: "center" }} />
       <div className="profile">
         <div className="nameWrapper">
           <div className="universe">
             <span>Name</span>
-            <div className="name" style={{ whiteSpace: 'pre-line' }}>
-              {JSON.parse(sessionStorage.getItem('userYS'))
-                .name.split(' ')
-                .join('\n')}
+            <div className="name" style={{ whiteSpace: "pre-line" }}>
+              {JSON.parse(sessionStorage.getItem("userYS"))
+                .name.split(" ")
+                .join("\n")}
             </div>
           </div>
         </div>
         <hr style={hrVeticalStyle} />
         <div className="profileStats">
           <div className="stat">
-            no of Syncs
-            {' '}
-            <br />
+            no of Syncs <br />
             <span>0</span>
           </div>
           <br />
@@ -119,30 +117,28 @@ const onSubmit = (text, loadingStatus, e) => {
     name: document.querySelector('form input[name="roomName"]').value,
     pwd: document.querySelector('form input[name="pwd"]').value,
   };
-  sessionStorage.setItem('room', JSON.stringify(room));
+  sessionStorage.setItem("room", JSON.stringify(room));
   loadingStatus(true);
-  fetch(`${baseUrl}/api/${text}`, {
-    method: 'POST',
+  fetch(`${baseUrl}/${text}`, {
+    method: "POST",
     body: JSON.stringify(room),
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
   }).then((response) => {
     if (response.status !== 200) {
-      alert('ERROR ');
+      alert("ERROR ");
       return null;
     }
-    return setTimeout(() => window.location.href = '/screen', 2500);
+    return setTimeout(() => (window.location.href = "/screen"), 2500);
   });
 };
 
-const CreateRoom = ({
-  changeBlur, showCR, title, desc, loadingStatus,
-}) => (
+const CreateRoom = ({ changeBlur, showCR, title, desc, loadingStatus }) => (
   <>
     <img
       className="closeBtn"
       onClick={() => {
         slideOut();
-        changeBlur('none');
+        changeBlur("none");
         showCR(false);
       }}
       src="https://img.icons8.com/ios/50/000000/close-window.png"
@@ -153,16 +149,13 @@ const CreateRoom = ({
         <div className="crtitle">{title}</div>
         <div className="desc">{desc}</div>
       </div>
-      <form className="crForm " onSubmit={(e) => onSubmit('createRoom', loadingStatus, e)}>
-        <label htmlFor="roomName">Room Name</label>
-        {' '}
-        <br />
-        <input name="roomName" type="text" />
-        {' '}
-        <br />
-        <label htmlFor="pwd">Password</label>
-        {' '}
-        <br />
+      <form
+        className="crForm "
+        onSubmit={(e) => onSubmit("createRoom", loadingStatus, e)}
+      >
+        <label htmlFor="roomName">Room Name</label> <br />
+        <input name="roomName" type="text" /> <br />
+        <label htmlFor="pwd">Password</label> <br />
         <input name="pwd" type="password" />
         <button className="crSubmit" type="submit">
           Submit
@@ -172,15 +165,13 @@ const CreateRoom = ({
   </>
 );
 
-const JoinRoom = ({
-  changeBlur, showJR, title, desc, loadingStatus,
-}) => (
+const JoinRoom = ({ changeBlur, showJR, title, desc, loadingStatus }) => (
   <>
     <img
       className="closeBtn"
       onClick={() => {
         slideOut();
-        changeBlur('none');
+        changeBlur("none");
         showJR(false);
       }}
       src="https://img.icons8.com/ios/50/000000/close-window.png"
@@ -191,16 +182,13 @@ const JoinRoom = ({
         <div className="crtitle">{title}</div>
         <div className="desc">{desc}</div>
       </div>
-      <form onSubmit={(e) => onSubmit('joinRoom', loadingStatus, e)} className="crForm ">
-        <label htmlFor="roomName">Room Name</label>
-        {' '}
-        <br />
-        <input name="roomName" type="text" />
-        {' '}
-        <br />
-        <label htmlFor="pwd">Password</label>
-        {' '}
-        <br />
+      <form
+        onSubmit={(e) => onSubmit("joinRoom", loadingStatus, e)}
+        className="crForm "
+      >
+        <label htmlFor="roomName">Room Name</label> <br />
+        <input name="roomName" type="text" /> <br />
+        <label htmlFor="pwd">Password</label> <br />
         <input name="pwd" type="password" />
         <button className="crSubmit" type="submit">
           Submit
@@ -211,44 +199,44 @@ const JoinRoom = ({
 );
 
 function DashBoard() {
-  const [blur, changeBlur] = useState('none');
+  const [blur, changeBlur] = useState("none");
   const [profile, showProfile] = useState(false);
   const [createRoom, showCR] = useState(false);
   const [joinRoom, showJR] = useState(false);
   const [loading, loadingStatus] = useState(false);
   useEffect(() => {
     const tl = gsap.timeline();
-    tl.to('.DashBegin', { width: toPX('100vw'), duration: 1 }, 1); // blue screen
-    tl.to('.dashTitle', { opacity: 1, duration: 1.3 }, '-=0.5'); // title comes in
-    tl.to('.DashBegin', { x: toPX('100vw'), duration: 0.8 }, '>'); // bluescreen fade out
+    tl.to(".DashBegin", { width: toPX("100vw"), duration: 1 }, 1); // blue screen
+    tl.to(".dashTitle", { opacity: 1, duration: 1.3 }, "-=0.5"); // title comes in
+    tl.to(".DashBegin", { x: toPX("100vw"), duration: 0.8 }, ">"); // bluescreen fade out
     /*  tl.to(".dashWrapper", { width: toPX("100vw") }, ">"); //actual dash in */
-    tl.to('.menu', { width: toPX('50vw') }, '<'); // red div in
+    tl.to(".menu", { width: toPX("50vw") }, "<"); // red div in
     tl.to(
-      '.dashTitle',
-      { top: toPX('88vh'), ease: 'ease-out', duration: 1.2 },
-      '+=0.3',
+      ".dashTitle",
+      { top: toPX("88vh"), ease: "ease-out", duration: 1.2 },
+      "+=0.3"
     ); // title falls down
-    tl.to('.profileBtn', { display: 'block' }, '-=1.2');
-    tl.to('.RoomOptions', { display: 'block' }, '-=1');
-    tl.to('#createRoom', { display: 'block', ease: 'ease-out' }, '>'); // Room option 1 pop up
-    tl.to('#joinRoom', { display: 'inline', ease: 'ease-out' }, '-=0.2'); // Room option 2 pop up
+    tl.to(".profileBtn", { display: "block" }, "-=1.2");
+    tl.to(".RoomOptions", { display: "block" }, "-=1");
+    tl.to("#createRoom", { display: "block", ease: "ease-out" }, ">"); // Room option 1 pop up
+    tl.to("#joinRoom", { display: "inline", ease: "ease-out" }, "-=0.2"); // Room option 2 pop up
   });
 
   useEffect(() => {
-    let mouseX; let
-      mouseY;
-    let traX; let
-      traY;
+    let mouseX;
+    let mouseY;
+    let traX;
+    let traY;
     document
-      .querySelector('.whiteScreen')
-      .addEventListener('mouseover', (e) => {
+      .querySelector(".whiteScreen")
+      .addEventListener("mouseover", (e) => {
         mouseX = e.pageX;
         mouseY = e.pageY;
         traX = (4 * mouseX) / 570 + 40;
         traY = (4 * mouseY) / 570 + 50;
-        if (document.querySelector('.name')) {
+        if (document.querySelector(".name")) {
           document.querySelector(
-            '.name',
+            ".name"
           ).style = `background-position:${traX}%${traY}%`;
         }
       });
@@ -261,7 +249,7 @@ function DashBoard() {
           <div
             className="profileBtn"
             onClick={() => {
-              changeBlur('inline');
+              changeBlur("inline");
               slideIn();
               showProfile(true);
             }}
@@ -294,7 +282,7 @@ function DashBoard() {
             <span
               id="createRoom"
               onClick={() => {
-                changeBlur('inline');
+                changeBlur("inline");
                 slideIn();
                 showCR(true);
               }}
@@ -305,7 +293,7 @@ function DashBoard() {
             <span
               id="joinRoom"
               onClick={() => {
-                changeBlur('inline');
+                changeBlur("inline");
                 slideIn();
                 showJR(true);
               }}

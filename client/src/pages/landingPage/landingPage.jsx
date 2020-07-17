@@ -50,7 +50,7 @@ const login = async (response) => {
   console.log(response);
   const tasks = [responseGoogle(response), userDB()];
   Promise.all(tasks)
-    .then(console.log("DEBUG") /* (window.location.href = "/dashboard") */)
+    .then(/* console.log("DEBUG")  */ (window.location.href = "/dashboard"))
     .catch((err) => console.error(err));
 };
 
