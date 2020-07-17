@@ -19,7 +19,7 @@ router.post(
 
     const { room: createdRoom } = await RoomRepo.create(
       req.body.name,
-      req.body.password
+      req.body.pwd
     );
     new SuccessResponse("Room Creation Successfull", {
       room: createdRoom,
